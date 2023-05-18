@@ -1,6 +1,6 @@
 package com.lojaonline.hermanos.br.service;
 
-import com.lojaonline.hermanos.br.models.ProdutoModels;
+import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,21 +14,21 @@ public class ProdutoService {
 
     final ProdutoRepository produtoRepository;
 
-    public List<ProdutoModels> findAll(){
+    public List<ProdutoModel> findAll(){
         return produtoRepository.findAll();
     }
 
-    public ProdutoModels save(ProdutoModels produtoModels){
-        produtoRepository.save(produtoModels);
-        return produtoModels;
+    public ProdutoModel save(ProdutoModel produtoModel){
+        produtoRepository.save(produtoModel);
+        return produtoModel;
     }
 
-    public Optional<ProdutoModels> findById(Long id){
+    public Optional<ProdutoModel> findById(Long id){
         return produtoRepository.findById(id);
     }
 
-    public void delete(ProdutoModels produtoModels){
-        produtoRepository.delete(produtoModels);
+    public void delete(ProdutoModel produtoModel){
+        produtoRepository.delete(produtoModel);
     }
 
 

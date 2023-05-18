@@ -1,6 +1,6 @@
 package com.lojaonline.hermanos.br.controller;
 
-import com.lojaonline.hermanos.br.models.ProdutoModels;
+import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ public class ProdutoController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> getOneProduto(@PathVariable(value = "id") Long id) {
 
-        Optional<ProdutoModels> produtoModelsOptional = produtoService.findById(id);
+        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
 
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
@@ -34,14 +34,14 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody ProdutoModels produtoModels){
+    public ResponseEntity<Object> save(@RequestBody ProdutoModel produtoModels){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.save(produtoModels));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletaProduto(@PathVariable(value = "id") Long id){
-        Optional<ProdutoModels> produtoModelsOptional = produtoService.findById(id);
+        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
 
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
@@ -53,18 +53,18 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProduto(@PathVariable(value = "id") Long id, @RequestBody ProdutoModels produtoModels) {
+    public ResponseEntity<Object> updateProduto(@PathVariable(value = "id") Long id, @RequestBody ProdutoModel produtoModel) {
 
-        Optional<ProdutoModels> produtoModelsOptional = produtoService.findById(id);
+        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
         }
 
         var produtoModelPut = produtoModelsOptional.get();
-        produtoModelPut.setNome(produtoModels.getNome());
-        produtoModelPut.setDescricao(produtoModels.getDescricao());
-        produtoModelPut.setPreco(produtoModels.getPreco());
-        produtoModelPut.setQtdDisponivel(produtoModels.getQtdDisponivel());
+        produtoModelPut.setNome(produtoModel.getNome());
+        produtoModelPut.setDescricao(produtoModel.getDescricao());
+        produtoModelPut.setPreco(produtoModel.getPreco());
+        produtoModelPut.setQtdDisponivel(produtoModel.getQtdDisponivel());
         produtoModelPut.setCategoria(produtoModelPut.getCategoria());
 
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.save(produtoModelPut));
