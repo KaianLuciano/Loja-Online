@@ -1,10 +1,12 @@
 package com.lojaonline.hermanos.br.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_produtos")
@@ -15,18 +17,22 @@ public class ProdutoModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "nome")
     private String nome;
 
-    @Column(nullable = false, unique = false)
+    @Column(name = "descricao")
     private String descricao;
 
-    @Column(nullable = false, unique = false)
+    @Column(name = "preco")
     private Double preco;
 
-    @Column(nullable = false, unique = false)
+    @Column(name = "qtdDisponivel")
     private Integer qtdDisponivel;
 
-    @Column(nullable = false, unique = false)
+    @Column(name = "categoria")
     private String categoria;
+
+    @ManyToMany(mappedBy = "produtos")
+    private List<PedidoModel> pedido;
+
 }

@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LojaOnlineApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LojaOnlineApplication.class, args);
+		SpringApplication.run(LojaOnlineApplication.class, args );
 	}
 
 }

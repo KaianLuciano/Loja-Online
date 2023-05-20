@@ -1,13 +1,19 @@
 package com.lojaonline.hermanos.br.controller;
 
+import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
 import com.lojaonline.hermanos.br.models.PedidoModel;
+import com.lojaonline.hermanos.br.models.ProdutoModel;
+import com.lojaonline.hermanos.br.models.UsuarioModel;
+import com.lojaonline.hermanos.br.models.enums.Status;
 import com.lojaonline.hermanos.br.service.PedidoService;
+import com.lojaonline.hermanos.br.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,6 +22,10 @@ import java.util.Optional;
 public class PedidoController {
 
     final PedidoService pedidoService;
+
+    final ControllerUtils controllerUtils;
+
+    final UsuarioService usuarioService;
 
     @GetMapping
     public ResponseEntity<Object> findAll() {
@@ -32,8 +42,8 @@ public class PedidoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody PedidoModel pedidoModel) {
-        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.save(pedidoModel));
+    public ResponseEntity<Object> savePedido(@RequestBody PedidoModel pedidos) {
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.savePedido(pedidos));
     }
 
     @DeleteMapping("/{id}")
@@ -56,9 +66,40 @@ public class PedidoController {
 
         var pedidoModelPut = pedidoModelOptional.get();
         pedidoModelPut.setUsuario(pedidoModel.getUsuario());
+        pedidoModelPut.setProdutos(pedidoModel.getProdutos());
         pedidoModelPut.setStatusPedido(pedidoModel.getStatusPedido());
 
-        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.save(pedidoModelPut));
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.savePedido(pedidoModelPut));
+    }
+
+    @PutMapping("/{id}/associar-usuario")
+    public ResponseEntity<Object> associarUsuario(@PathVariable(value = "id") Long id, @RequestBody Map<String, Object> request) {
+
+        Integer idUsuarioInteger = (Integer) request.get("idUsuario");
+        Long idUsuario = idUsuarioInteger != null ? idUsuarioInteger.longValue() : null;
+
+        String statusPedido = (String) request.get("statusPedido");
+        Optional<UsuarioModel> usuario;
+
+        if(idUsuario != null) {
+            usuario = usuarioService.findById(idUsuario);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("idUsuario é nullo ou não corresponde a um numero");
+        }
+
+        PedidoModel pedido = new PedidoModel();
+        pedido.setProdutos((List<ProdutoModel>) request.get("produtos"));
+
+        int statusPedidoValue = Integer.parseInt(statusPedido) + 1;
+        if (Status.isValidValue(statusPedidoValue)) {
+           Status status = Status.values()[statusPedidoValue];
+           pedido.setStatusPedido(status);
+        } else {
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status Inserido Invalido, " +  "enum inserido: " + statusPedidoValue);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.associarPedidoAoUsuario(pedido, usuario.get()));
+
     }
 
 }
