@@ -42,24 +42,6 @@ public class UsuarioService {
         return usuario;
     }
 
-    /*public UsuarioModel adicionarProdutoAoPedido(UsuarioModel usuario, ProdutoModel novoProduto) {
-        List<PedidoModel> pedidos = usuario.getPedidos();
-
-        if(pedidos.isEmpty()) {
-            PedidoModel novoPedido = new PedidoModel();
-            novoPedido.setUsuario(usuario);
-            novoPedido.getProdutos().add(novoProduto);
-        } else {
-            PedidoModel pedidoExistente = pedidos.get(0);
-            pedidoExistente.getProdutos().add(novoProduto);
-        }
-
-        usuario.setPedidos(pedidos);
-        usuarioRepository.save(usuario);
-
-        return usuario;
-    }*/
-
     public Optional<UsuarioModel> findById(Long cpf){
         return usuarioRepository.findById(cpf);
     }

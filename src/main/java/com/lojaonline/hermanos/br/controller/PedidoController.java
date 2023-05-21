@@ -72,6 +72,13 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.savePedido(pedidoModelPut));
     }
 
+
+    /*Irá receber uma requisição POST recebendo um objeto Json com o seguinte corpo
+        "produtos": [],
+        "usuario": "",
+        "statusPedido": "0",
+        "idUsuario": 1
+     */
     @PutMapping("/{id}/associar-usuario")
     public ResponseEntity<Object> associarUsuario(@PathVariable(value = "id") Long id, @RequestBody Map<String, Object> request) {
 

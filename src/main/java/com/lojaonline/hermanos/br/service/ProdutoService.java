@@ -37,5 +37,17 @@ public class ProdutoService {
         produtoRepository.delete(produtoModel);
     }
 
+    public PedidoModel associarProdutoAoPedido(List<ProdutoModel> produtos, PedidoModel pedido) {
+        pedido.setProdutos(produtos);
+        pedidoRepository.save(pedido);
+
+        for(ProdutoModel produto : produtos) {
+            produto.getPedido().add(pedido);
+            produtoRepository.save(produto);
+        }
+
+        return pedido;
+    }
+
 
 }

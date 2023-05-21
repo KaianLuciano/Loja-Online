@@ -49,18 +49,6 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioModel));
     }
 
-    /*@PostMapping("/{id}/adicionarProduto")
-    public ResponseEntity<Object> adicionarProduto(@PathVariable(value = "id") Long id) {
-
-        Optional<ProdutoModel> produto = produtoService.findById(id);
-
-        if(!produto.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body("Produto com o ID especificado não encontrado!");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.adicionarProdutoAoPedido(produto.get()));
-    }*/
-
     @DeleteMapping("/{cpf}")
     public ResponseEntity<Object> deletaUsuario(@PathVariable(value = "cpf") Long cpf){
         Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);

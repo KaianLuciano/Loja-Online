@@ -33,6 +33,7 @@ public class ProdutoModel implements Serializable {
     private String categoria;
 
     @ManyToMany(mappedBy = "produtos")
+    @JsonIgnore
     private List<PedidoModel> pedido;
 
 }
