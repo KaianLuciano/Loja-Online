@@ -50,17 +50,18 @@ public class CarrinhoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(carrinhoService.saveCarrinho(carrinhoModel));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteCarrinho(@PathVariable(value = "id") Long id){
-        Optional<CarrinhoModel> carrinhoModelOptional = carrinhoService.findById(id);
+    @DeleteMapping("/deleta-produto-carrinho/{idProduto}/{idCarrinho}")
+    public ResponseEntity<Object> deleteCarrinho(@PathVariable(value = "idProduto") Long idProduto, @PathVariable(value = "idCarrinho") Long idCarrinho){
+        CarrinhoModel carrinhoModel = carrinhoService.findById(idCarrinho).get();
 
-        if(!carrinhoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrinho não foi encontrado");
+
+        for(int contador = 0 ; contador < carrinhoModel.getProdutos().size(); contador++) {
+            if (carrinhoModel.getProdutos().get(contador).getId() == idProduto) {
+                carrinhoModel.getProdutos().remove(contador);
+            }
         }
 
-        carrinhoService.delete(carrinhoModelOptional.get());
-
-        return ResponseEntity.status(HttpStatus.OK).body("Carrinho Deletado");
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.saveCarrinho(carrinhoModel));
     }
 
     /*
