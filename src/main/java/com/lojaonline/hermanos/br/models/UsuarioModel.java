@@ -14,12 +14,21 @@ import java.util.List;
 public class UsuarioModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cpf;
+    @Column(name = "cpf", unique = true, nullable = true, length = 11)
+    private String cpf;
+
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "senha")
     private String senha;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PedidoModel> pedidos;
+
+    @OneToOne
+    private CarrinhoModel carrinhoModel;
 }

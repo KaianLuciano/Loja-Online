@@ -1,38 +1,32 @@
 package com.lojaonline.hermanos.br.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lojaonline.hermanos.br.models.enums.Status;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.CascadeType.ALL;
-
 @Entity
-@Table(name = "tb_pedidos")
+@Table(name = "tb_carrinho")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class PedidoModel implements Serializable {
+public class CarrinhoModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToMany
-    @JoinTable(name="pedido_tem_produto", joinColumns=
+    @JoinTable(name="carrinho_tem_produtos", joinColumns=
     {@JoinColumn(name="pedido_id")}, inverseJoinColumns=
     {@JoinColumn(name="produto_id")})
     private List<ProdutoModel> produtos;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id")
+    @OneToOne
     @JsonIgnore
     private UsuarioModel usuario;
-
-    @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = true, unique = false)
-    private Status statusPedido;
-
 }

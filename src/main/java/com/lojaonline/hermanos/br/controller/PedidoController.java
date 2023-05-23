@@ -84,7 +84,7 @@ public class PedidoController {
         "idProdutos": []
      */
     @PostMapping("/{id}/associar-usuario")
-    public ResponseEntity<Object> associarUsuario(@PathVariable(value = "id") Long id, @RequestBody Map<String, Object> request) {
+    public ResponseEntity<Object> associarUsuario(@PathVariable(value = "id") String id, @RequestBody Map<String, Object> request) {
 
         int statusPedido = (int) request.get("statusPedido");
         Optional<UsuarioModel> usuario;

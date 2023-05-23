@@ -34,6 +34,10 @@ public class ProdutoModel implements Serializable {
 
     @ManyToMany(mappedBy = "produtos")
     @JsonIgnore
+    List<CarrinhoModel> carrinhos;
+
+    @ManyToMany(mappedBy = "produtos")
+    @JsonIgnore
     private List<PedidoModel> pedido;
 
 }

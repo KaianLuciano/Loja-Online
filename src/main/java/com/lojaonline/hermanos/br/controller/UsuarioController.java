@@ -1,9 +1,11 @@
 package com.lojaonline.hermanos.br.controller;
 
 import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
+import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.PedidoModel;
 import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
+import com.lojaonline.hermanos.br.service.CarrinhoService;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
@@ -14,6 +16,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -22,9 +25,6 @@ import java.util.Optional;
 public class UsuarioController {
 
     final UsuarioService usuarioService;
-
-    final ControllerUtils controllerUtils;
-
     final ProdutoService produtoService;
 
     @GetMapping
@@ -33,7 +33,9 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Long cpf) {
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") String cpf) {
+
+        Long teste = Long.parseLong(cpf);
 
         Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
 
@@ -50,7 +52,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{cpf}")
-    public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "cpf") Long cpf){
+    public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "cpf") String cpf){
         Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
 
         if(!usuarioModelsOptional.isPresent()) {
@@ -63,7 +65,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "id") Long cpf, @RequestBody UsuarioModel usuarioModel) {
+    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "id") String cpf, @RequestBody UsuarioModel usuarioModel) {
 
         Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
         if(!usuarioModelsOptional.isPresent()) {

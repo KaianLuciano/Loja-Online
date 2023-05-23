@@ -81,39 +81,4 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.saveProduto(produtoModelPut));
     }
 
-    /*Irá receber uma requisição POST recebendo um objeto Json com o seguinte corpo
-        "idProdutos: [1,2,3] // Lista Dos produtos que serão associados
-     */
-    @PutMapping("/{id}/associar-produtos")
-    public ResponseEntity<Object> associarPedido(@PathVariable(value = "id") Long id,@RequestBody Map<String, List<Object>> request) {
-        Optional<PedidoModel> pedido;
-
-        if(id != null) {
-           pedido = pedidoService.findById(id);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("idPedido é nullo ou não corresponde a um número");
-        }
-
-        List<Object> idProdutos = request.get("idProdutos");
-        List<Integer> idProdutosAuxiliar = new ArrayList<>();
-
-        for(Object teste : idProdutos) {
-           idProdutosAuxiliar.add((Integer) teste);
-        }
-
-        List<Long> idDosProdutosRecebidos = new ArrayList<>();
-
-        for(Integer sla : idProdutosAuxiliar) {
-            idDosProdutosRecebidos.add(idProdutosAuxiliar != null ? sla.longValue() : null);
-        }
-
-        List<ProdutoModel> produtos = new ArrayList<>();
-
-        for(Long idDosProdutos : idDosProdutosRecebidos) {
-            produtos.add(produtoService.findById(idDosProdutos).get());
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.associarProdutoAoPedido(produtos, pedido.get()));
-    }
-
 }

@@ -1,14 +1,16 @@
 package com.lojaonline.hermanos.br.service;
 
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
+import com.fasterxml.jackson.databind.util.BeanUtil;
+import com.lojaonline.hermanos.br.DTO.CarrinhoDTO;
+import com.lojaonline.hermanos.br.DTO.UsuarioDTO;
+import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
+import com.lojaonline.hermanos.br.service.CarrinhoService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,25 +24,26 @@ public class UsuarioService {
     final UsuarioRepository usuarioRepository;
     final PedidoRepository pedidoRepository;
     final ProdutoRepository produtoRepository;
+    final CarrinhoService carrinhoService;
 
-    public List<UsuarioModel> findAll(){
-        return usuarioRepository.findAll();
-    }
 
-    public Optional<UsuarioModel> findById(Long cpf){return usuarioRepository.findById(cpf);}
+    public List<UsuarioModel> findAll(){ return usuarioRepository.findAll(); }
 
-    public UsuarioModel saveUsuario(UsuarioModel usuario){
-        List<PedidoModel> pedidos = usuario.getPedidos();
+    public Optional<UsuarioModel> findById(String cpf){return usuarioRepository.findById(cpf);}
 
-        for (PedidoModel pedido : pedidos) {
-            pedido.setUsuario(usuario);
-            pedidoRepository.save(pedido);
-        }
+    public UsuarioModel saveUsuario(UsuarioModel usuario) {
+        usuarioRepository.save(usuario);
 
+        CarrinhoModel carrinhoModel = new CarrinhoModel();
+        carrinhoModel.setUsuario(usuario);
+        carrinhoService.saveCarrinho(carrinhoModel);
+
+        usuario.setCarrinhoModel(carrinhoModel);
         usuarioRepository.save(usuario);
 
         return usuario;
     }
+
 
     public void delete(UsuarioModel usuarioModel){
         usuarioRepository.delete(usuarioModel);
