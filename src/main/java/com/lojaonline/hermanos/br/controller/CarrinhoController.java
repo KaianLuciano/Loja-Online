@@ -67,43 +67,28 @@ public class CarrinhoController {
         Corpo que será recebido no Json
         {
             "idProdutos": [1, 2, 3]",
-            "idUsuario": 1
         }
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "id") Long cpf, @RequestBody Map<String, Object> request) {
-        List<Object> idProdutos = (List<Object>) request.get("idProdutos");
-        String idUsuario = (String) request.get("idUsuario");
-        List<Integer> idProdutosInteger = new ArrayList<>();
+    @PutMapping("/adicionar-produto/{id}")
+    public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "id") Long idCarrinho, @RequestBody Map<String, Object> request) {
+        List<Integer> idProdutos = (List<Integer>) request.get("idProdutos");
+        List<Long> idProdutosLong = new ArrayList<>();
 
-        for(Object idProdutosRecebidos : idProdutos) {
-            idProdutosInteger.add((Integer) idProdutosRecebidos);
-        }
-
-        List<Long> idPedidosLong = new ArrayList<>();
-
-        for(Integer idProdutosAuxiliar : idProdutosInteger) {
-            idPedidosLong.add(idProdutosAuxiliar != null ? idProdutosAuxiliar.longValue() : null);
+        for(Integer idProdutoAuxiliar : idProdutos) {
+                idProdutosLong.add(idProdutoAuxiliar != null ? idProdutoAuxiliar.longValue() : null);
         }
 
         List<ProdutoModel> produtos = new ArrayList<>();
 
-        for(Long idProdutoAuxiliar : idPedidosLong) {
-            produtos.add(produtoService.findById(idProdutoAuxiliar).get());
+        for(Long idProdutosAuxiliar : idProdutosLong) {
+            produtos.add(produtoService.findById(idProdutosAuxiliar).get());
         }
 
-        UsuarioModel usuario = new UsuarioModel();
-
-        if(idUsuario != null) {
-            usuario = usuarioService.findById(idUsuario).get();
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario correpondente ao id " + idUsuario + "não foi encontrado");
-        }
-
-        CarrinhoModel carrinho = new CarrinhoModel();
+        CarrinhoModel carrinho = carrinhoService.findById(idCarrinho).get();
 
         carrinho.setProdutos(produtos);
-        carrinho.setUsuario(usuario);
+
+        carrinhoService.saveCarrinho(carrinho);
 
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.saveCarrinho(carrinho));
     }

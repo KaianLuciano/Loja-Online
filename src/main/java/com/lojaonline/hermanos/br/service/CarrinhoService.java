@@ -2,6 +2,7 @@ package com.lojaonline.hermanos.br.service;
 
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.PedidoModel;
+import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
 import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
