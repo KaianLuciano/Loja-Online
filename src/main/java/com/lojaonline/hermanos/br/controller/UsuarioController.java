@@ -45,12 +45,12 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody UsuarioModel usuarioModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.save(usuarioModel));
+    public ResponseEntity<Object> saveUsuario(@RequestBody UsuarioModel usuarioModel) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUsuario(usuarioModel));
     }
 
     @DeleteMapping("/{cpf}")
-    public ResponseEntity<Object> deletaUsuario(@PathVariable(value = "cpf") Long cpf){
+    public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "cpf") Long cpf){
         Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
 
         if(!usuarioModelsOptional.isPresent()) {
@@ -63,11 +63,11 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProduto(@PathVariable(value = "id") Long cpf, @RequestBody UsuarioModel usuarioModel) {
+    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "id") Long cpf, @RequestBody UsuarioModel usuarioModel) {
 
         Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
         if(!usuarioModelsOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não foi encontrado");
         }
 
         var usuarioModelPut = usuarioModelsOptional.get();
@@ -77,7 +77,7 @@ public class UsuarioController {
         usuarioModelPut.setCpf(usuarioModel.getCpf());
         usuarioModelPut.setPedidos(usuarioModel.getPedidos());
 
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.save(usuarioModelPut));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.saveUsuario(usuarioModelPut));
     }
 
 }

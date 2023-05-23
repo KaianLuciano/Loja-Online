@@ -23,14 +23,15 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    @Transactional
-    public ProdutoModel save(ProdutoModel produtoModel){
-        produtoRepository.save(produtoModel);
-        return produtoModel;
-    }
-
     public Optional<ProdutoModel> findById(Long id){
         return produtoRepository.findById(id);
+    }
+
+
+    @Transactional
+    public ProdutoModel saveProduto(ProdutoModel produtoModel){
+        produtoRepository.save(produtoModel);
+        return produtoModel;
     }
 
     public void delete(ProdutoModel produtoModel){

@@ -27,10 +27,10 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public UsuarioModel save(UsuarioModel usuario){
-        List<PedidoModel> pedidos = usuario.getPedidos();
+    public Optional<UsuarioModel> findById(Long cpf){return usuarioRepository.findById(cpf);}
 
-        usuarioRepository.save(usuario);
+    public UsuarioModel saveUsuario(UsuarioModel usuario){
+        List<PedidoModel> pedidos = usuario.getPedidos();
 
         for (PedidoModel pedido : pedidos) {
             pedido.setUsuario(usuario);
@@ -40,10 +40,6 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
 
         return usuario;
-    }
-
-    public Optional<UsuarioModel> findById(Long cpf){
-        return usuarioRepository.findById(cpf);
     }
 
     public void delete(UsuarioModel usuarioModel){

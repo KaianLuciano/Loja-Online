@@ -39,8 +39,6 @@ public class PedidoService {
     }
 
     public PedidoModel associarPedidoAoUsuario(PedidoModel pedido, UsuarioModel usuario) {
-        pedidoRepository.save(pedido);
-
         pedido.setUsuario(usuario);
 
         pedidoRepository.save(pedido);

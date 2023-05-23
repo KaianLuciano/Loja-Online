@@ -47,7 +47,7 @@ public class PedidoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> deletePedido(@PathVariable(value = "id") Long id) {
 
         Optional<PedidoModel> pedidoModelOptional = pedidoService.findById(id);
         if(!pedidoModelOptional.isPresent()) {
@@ -77,32 +77,27 @@ public class PedidoController {
         "produtos": [],
         "usuario": "",
         "statusPedido": "0",
-        "idUsuario": 1
      */
-    @PutMapping("/{id}/associar-usuario")
+    @PostMapping("/{id}/associar-usuario")
     public ResponseEntity<Object> associarUsuario(@PathVariable(value = "id") Long id, @RequestBody Map<String, Object> request) {
 
-        Integer idUsuarioInteger = (Integer) request.get("idUsuario");
-        Long idUsuario = idUsuarioInteger != null ? idUsuarioInteger.longValue() : null;
-
-        String statusPedido = (String) request.get("statusPedido");
+        int statusPedido = (int) request.get("statusPedido");
         Optional<UsuarioModel> usuario;
 
-        if(idUsuario != null) {
-            usuario = usuarioService.findById(idUsuario);
+        if(id != null) {
+            usuario = usuarioService.findById(id);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("idUsuario é nullo ou não corresponde a um numero");
         }
 
         PedidoModel pedido = new PedidoModel();
-        pedido.setProdutos((List<ProdutoModel>) request.get("produtos"));
+        pedido.setUsuario(usuario.get());
 
-        int statusPedidoValue = Integer.parseInt(statusPedido) + 1;
-        if (Status.isValidValue(statusPedidoValue)) {
-           Status status = Status.values()[statusPedidoValue];
+        if (Status.isValidValue(statusPedido)) {
+           Status status = Status.values()[statusPedido - 1];
            pedido.setStatusPedido(status);
         } else {
-           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status Inserido Invalido, " +  "enum inserido: " + statusPedidoValue);
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status Inserido Invalido, " +  "enum inserido: " + statusPedido);
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.associarPedidoAoUsuario(pedido, usuario.get()));

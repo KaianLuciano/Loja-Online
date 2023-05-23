@@ -33,7 +33,7 @@ public class ProdutoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneProduto(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
 
         Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
 
@@ -45,9 +45,9 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> save(@RequestBody ProdutoModel produtoModels){
+    public ResponseEntity<Object> saveProduto(@RequestBody ProdutoModel produtoModels){
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.save(produtoModels));
+        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.saveProduto(produtoModels));
     }
 
     @DeleteMapping("/{id}")
@@ -78,18 +78,11 @@ public class ProdutoController {
         produtoModelPut.setQtdDisponivel(produtoModel.getQtdDisponivel());
         produtoModelPut.setCategoria(produtoModelPut.getCategoria());
 
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.save(produtoModelPut));
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.saveProduto(produtoModelPut));
     }
 
     /*Irá receber uma requisição POST recebendo um objeto Json com o seguinte corpo
-        "nome": "Iphone 13",
-        "descricao": "Incrivel celular",
-        "preco": 222.33,
-        "qtdDisponivel": 1,
-        "categoria": "Smarthphones",
-        "pedido": "",
-        "idPedido": 1,
-        "idorodutos: [1,2,3]
+        "idProdutos: [1,2,3] // Lista Dos produtos que serão associados
      */
     @PutMapping("/{id}/associar-produtos")
     public ResponseEntity<Object> associarPedido(@PathVariable(value = "id") Long id,@RequestBody Map<String, List<Object>> request) {
