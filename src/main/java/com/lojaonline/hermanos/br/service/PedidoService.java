@@ -2,10 +2,12 @@ package com.lojaonline.hermanos.br.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.PedidoModel;
 import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
 import com.lojaonline.hermanos.br.models.enums.Status;
+import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
@@ -24,8 +26,8 @@ import java.util.Optional;
 public class PedidoService {
 
     final PedidoRepository pedidoRepository;
-
     final ProdutoRepository produtoRepository;
+    final CarrinhoRepository carrinhoRepository;
 
     public List<PedidoModel> findAll(){
         return pedidoRepository.findAll();
@@ -33,15 +35,23 @@ public class PedidoService {
 
     public Optional<PedidoModel> findById(Long id) { return pedidoRepository.findById(id); }
 
+    /*
+        Ao criar o pedido ele transfere a lista de produtos do carrinho para o pedido,
+        e logo em seguida ele limpa os pedidos do carrinho.
+     */
     @Transactional
-    public PedidoModel savePedido(PedidoModel pedido) {
-        return pedidoRepository.save(pedido);
-    }
-
-    public PedidoModel associarPedidoAoUsuario(PedidoModel pedido, UsuarioModel usuario, List<ProdutoModel> produtos) {
+    public PedidoModel criarPedido(UsuarioModel usuario) {
+        PedidoModel pedido = new PedidoModel();
+        pedido.setProdutos(usuario.getCarrinhoModel().getProdutos());
         pedido.setUsuario(usuario);
-        pedido.setProdutos(produtos);
+        pedido.setStatusPedido(Status.PENDENTE);
+
         pedidoRepository.save(pedido);
+
+        CarrinhoModel carrinho = new CarrinhoModel();
+        carrinho = usuario.getCarrinhoModel();
+        carrinho.setProdutos(null);
+        carrinhoRepository.save(carrinho);
 
         return pedido;
     }
