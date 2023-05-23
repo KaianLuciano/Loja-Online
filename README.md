@@ -1,6 +1,6 @@
 # Loja Online
 
-Loja online é atualmente uma API RESP que irá gerenciar as requisições de um futuro front-end a ser desenvolvido, fazendo assim o gerenciamento dos dados.
+Loja online é atualmente uma API REST que irá gerenciar as requisições de um futuro front-end a ser desenvolvido, fazendo assim o gerenciamento dos dados.
 
 ## Features
 
