@@ -1,8 +1,11 @@
 package com.lojaonline.hermanos.br.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.PedidoModel;
+import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,18 +18,17 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO {
+public class ProdutoDTO {
 
     private String nome;
-    private String email;
-    private List<PedidoModel> pedidos;
-    private CarrinhoModel carrinho;
+    private String descricao;
+    private Double preco;
+    private Integer qtdDisponivel;
+    private String categoria;
+    List<CarrinhoModel> carrinhos;
+    private List<PedidoModel> pedido;
 
-    public UsuarioDTO(UsuarioModel entity) {
-        /*
-         * Classe utilitaria que contem um metodo que auxilia a preencher todos os atributos, usado quando se tem
-         * muitos atributos em uma classe. Se os nomes dos atributos das duas classes forem iguais, ele copia tudo.
-         */
+    public ProdutoDTO(ProdutoModel entity) {
         BeanUtils.copyProperties(entity, this);
     }
 
