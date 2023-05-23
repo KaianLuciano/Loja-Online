@@ -6,12 +6,14 @@ import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
 import com.lojaonline.hermanos.br.models.enums.Status;
 import com.lojaonline.hermanos.br.service.PedidoService;
+import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,6 +28,8 @@ public class PedidoController {
     final ControllerUtils controllerUtils;
 
     final UsuarioService usuarioService;
+
+    final ProdutoService produtoService;
 
     @GetMapping
     public ResponseEntity<Object> findAll() {
@@ -77,6 +81,7 @@ public class PedidoController {
         "produtos": [],
         "usuario": "",
         "statusPedido": "0",
+        "idProdutos": []
      */
     @PostMapping("/{id}/associar-usuario")
     public ResponseEntity<Object> associarUsuario(@PathVariable(value = "id") Long id, @RequestBody Map<String, Object> request) {
@@ -90,6 +95,25 @@ public class PedidoController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("idUsuario é nullo ou não corresponde a um numero");
         }
 
+        List<Object> idProdutos = (List<Object>)request.get("idProdutos");
+        List<Integer> idProdutosAuxiliar = new ArrayList<>();
+
+        for(Object idProdutosRecebidos : idProdutos) {
+            idProdutosAuxiliar.add((Integer) idProdutosRecebidos);
+        }
+
+        List<Long> idDosProdutosRecebidos = new ArrayList<>();
+
+        for(Integer idProdutosRecebidos : idProdutosAuxiliar) {
+            idDosProdutosRecebidos.add(idProdutosAuxiliar != null ? idProdutosRecebidos.longValue() : null);
+        }
+
+        List<ProdutoModel> produtos = new ArrayList<>();
+
+        for(Long idDosProdutos : idDosProdutosRecebidos) {
+            produtos.add(produtoService.findById(idDosProdutos).get());
+        }
+
         PedidoModel pedido = new PedidoModel();
         pedido.setUsuario(usuario.get());
 
@@ -100,7 +124,7 @@ public class PedidoController {
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Status Inserido Invalido, " +  "enum inserido: " + statusPedido);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.associarPedidoAoUsuario(pedido, usuario.get()));
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.associarPedidoAoUsuario(pedido, usuario.get(), produtos));
 
     }
 

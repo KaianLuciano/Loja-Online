@@ -38,9 +38,9 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public PedidoModel associarPedidoAoUsuario(PedidoModel pedido, UsuarioModel usuario) {
+    public PedidoModel associarPedidoAoUsuario(PedidoModel pedido, UsuarioModel usuario, List<ProdutoModel> produtos) {
         pedido.setUsuario(usuario);
-
+        pedido.setProdutos(produtos);
         pedidoRepository.save(pedido);
 
         return pedido;
