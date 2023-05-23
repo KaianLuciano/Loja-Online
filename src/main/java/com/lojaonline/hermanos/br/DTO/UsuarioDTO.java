@@ -23,10 +23,6 @@ public class UsuarioDTO {
     private CarrinhoModel carrinho;
 
     public UsuarioDTO(UsuarioModel entity) {
-        /*
-         * Classe utilitaria que contem um metodo que auxilia a preencher todos os atributos, usado quando se tem
-         * muitos atributos em uma classe. Se os nomes dos atributos das duas classes forem iguais, ele copia tudo.
-         */
         BeanUtils.copyProperties(entity, this);
     }
 
