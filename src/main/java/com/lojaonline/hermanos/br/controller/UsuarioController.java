@@ -1,22 +1,15 @@
 package com.lojaonline.hermanos.br.controller;
 
-import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
-import com.lojaonline.hermanos.br.models.CarrinhoModel;
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
+
 import com.lojaonline.hermanos.br.models.UsuarioModel;
-import com.lojaonline.hermanos.br.service.CarrinhoService;
-import com.lojaonline.hermanos.br.service.PedidoService;
+
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -34,12 +27,9 @@ public class UsuarioController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") String cpf) {
+        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findByIdPrivate(cpf);
 
-        Long teste = Long.parseLong(cpf);
-
-        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
-
-        if(!usuarioModelsOptional.isPresent()) {
+        if(usuarioModelsOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado");
         }
 
@@ -53,22 +43,20 @@ public class UsuarioController {
 
     @DeleteMapping("/{cpf}")
     public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "cpf") String cpf){
-        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
+        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findByIdPrivate(cpf);
 
-        if(!usuarioModelsOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
+        if(usuarioModelsOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não foi encontrado");
         }
 
-        usuarioService.delete(usuarioModelsOptional.get());
-
-        return ResponseEntity.status(HttpStatus.OK).body("Produto Deletado");
+        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado: " + usuarioService.delete(usuarioModelsOptional.get()));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUsuario(@PathVariable(value = "id") String cpf, @RequestBody UsuarioModel usuarioModel) {
 
-        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findById(cpf);
-        if(!usuarioModelsOptional.isPresent()) {
+        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findByIdPrivate(cpf);
+        if(usuarioModelsOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não foi encontrado");
         }
 

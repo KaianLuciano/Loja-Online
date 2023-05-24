@@ -20,12 +20,16 @@ import java.util.List;
 @NoArgsConstructor
 public class ProdutoDTO {
 
+    @JsonIgnore
+    private Long id;
     private String nome;
     private String descricao;
     private Double preco;
     private Integer qtdDisponivel;
     private String categoria;
+    @JsonIgnore
     List<CarrinhoModel> carrinhos;
+    @JsonIgnore
     private List<PedidoModel> pedido;
 
     public ProdutoDTO(ProdutoModel entity) {

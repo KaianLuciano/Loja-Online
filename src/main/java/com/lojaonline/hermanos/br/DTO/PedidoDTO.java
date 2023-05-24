@@ -21,6 +21,8 @@ import java.util.List;
 @NoArgsConstructor
 public class PedidoDTO {
 
+    @JsonIgnore
+    private Long id;
     private List<ProdutoModel> produtos;
     private UsuarioModel usuario;
     private Status statusPedido;

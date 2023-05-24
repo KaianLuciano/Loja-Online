@@ -1,5 +1,6 @@
 package com.lojaonline.hermanos.br.controller;
 
+import com.lojaonline.hermanos.br.DTO.UsuarioDTO;
 import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
 import com.lojaonline.hermanos.br.models.PedidoModel;
 import com.lojaonline.hermanos.br.models.ProdutoModel;
@@ -47,7 +48,7 @@ public class PedidoController {
 
     @PostMapping("/criar-pedido/{cpfUsuario}")
     public ResponseEntity<Object> criarPedido(@PathVariable(value = "cpfUsuario") String cpf) {
-        UsuarioModel usuario = usuarioService.findById(cpf).get();
+        UsuarioModel usuario = usuarioService.findByIdPrivate(cpf).get();
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.criarPedido(usuario));
     }
 

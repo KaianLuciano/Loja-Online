@@ -1,5 +1,6 @@
 package com.lojaonline.hermanos.br.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
@@ -18,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CarrinhoDTO implements Serializable {
 
+    private Long id;
     private List<ProdutoModel> produtos;
     private UsuarioModel usuario;
 

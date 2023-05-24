@@ -27,26 +27,34 @@ public class UsuarioService {
     final CarrinhoService carrinhoService;
 
 
-    public List<UsuarioModel> findAll(){ return usuarioRepository.findAll(); }
+    public List<UsuarioDTO> findAll(){
+        List<UsuarioModel> usuarioModel = usuarioRepository.findAll();
+        return usuarioModel.stream().map(x -> new UsuarioDTO(x)).toList();
+    }
 
-    public Optional<UsuarioModel> findById(String cpf){return usuarioRepository.findById(cpf);}
+    public UsuarioDTO findById(String cpf){
+        return new UsuarioDTO(usuarioRepository.findById(cpf).get());
+    }
 
-    public UsuarioModel saveUsuario(UsuarioModel usuario) {
+    public Optional<UsuarioModel> findByIdPrivate(String cpf){
+        Optional<UsuarioModel> usuario = usuarioRepository.findById(cpf);
+        return usuario;
+    }
+
+    public UsuarioDTO saveUsuario(UsuarioModel usuario) {
         usuarioRepository.save(usuario);
 
         CarrinhoModel carrinhoModel = new CarrinhoModel();
         carrinhoModel.setUsuario(usuario);
         carrinhoService.saveCarrinho(carrinhoModel);
-
         usuario.setCarrinhoModel(carrinhoModel);
         usuarioRepository.save(usuario);
 
-        return usuario;
+        return new UsuarioDTO(usuario);
     }
 
-
-    public void delete(UsuarioModel usuarioModel){
-        usuarioRepository.delete(usuarioModel);
+    public UsuarioDTO delete(UsuarioModel usuarioModel){
+        return new UsuarioDTO(usuarioModel);
     }
 
 }

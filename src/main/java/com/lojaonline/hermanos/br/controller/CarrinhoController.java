@@ -61,7 +61,7 @@ public class CarrinhoController {
             }
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.saveCarrinho(carrinhoModel));
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.delete(carrinhoModel));
     }
 
     /*
@@ -70,8 +70,8 @@ public class CarrinhoController {
             "idProdutos": [1, 2, 3]",
         }
      */
-    @PutMapping("/adicionar-produto/{id}")
-    public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "id") Long idCarrinho, @RequestBody Map<String, Object> request) {
+    @PutMapping("/adicionar-produto/{idCarrinho}")
+    public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "idCarrinho") Long idCarrinho, @RequestBody Map<String, Object> request) {
         List<Integer> idProdutos = (List<Integer>) request.get("idProdutos");
         List<Long> idProdutosLong = new ArrayList<>();
 
@@ -88,9 +88,7 @@ public class CarrinhoController {
         CarrinhoModel carrinho = carrinhoService.findById(idCarrinho).get();
 
         carrinho.setProdutos(produtos);
-
-        carrinhoService.saveCarrinho(carrinho);
-
+        System.out.println("Aqui");
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.saveCarrinho(carrinho));
     }
 

@@ -1,5 +1,6 @@
 package com.lojaonline.hermanos.br.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.PedidoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
@@ -20,7 +21,7 @@ public class UsuarioDTO {
     private String nome;
     private String email;
     private List<PedidoModel> pedidos;
-    private CarrinhoModel carrinho;
+    private CarrinhoModel carrinhoModel;
 
     public UsuarioDTO(UsuarioModel entity) {
         BeanUtils.copyProperties(entity, this);

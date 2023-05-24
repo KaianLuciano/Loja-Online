@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "tb_carrinho")
+@Table(name = "tb_carrinhos")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class CarrinhoModel implements Serializable {
 
@@ -22,7 +22,7 @@ public class CarrinhoModel implements Serializable {
 
     @ManyToMany
     @JoinTable(name="carrinho_tem_produtos", joinColumns=
-    {@JoinColumn(name="pedido_id")}, inverseJoinColumns=
+    {@JoinColumn(name="carrinho_id")}, inverseJoinColumns=
     {@JoinColumn(name="produto_id")})
     private List<ProdutoModel> produtos;
 
