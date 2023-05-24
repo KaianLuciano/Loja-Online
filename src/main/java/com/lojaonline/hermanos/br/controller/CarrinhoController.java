@@ -62,7 +62,7 @@ public class CarrinhoController {
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.delete(carrinhoModel));
-    }
+        }
 
     /*
         Corpo que será recebido no Json
