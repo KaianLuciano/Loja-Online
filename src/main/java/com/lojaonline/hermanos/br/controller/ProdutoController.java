@@ -5,6 +5,9 @@ import com.lojaonline.hermanos.br.models.PedidoModel;
 import com.lojaonline.hermanos.br.models.ProdutoModel;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +30,26 @@ public class ProdutoController {
 
     final PedidoService pedidoService;
 
+    @Operation(summary = "Procura todos o produtos existentes no banco", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
     @GetMapping
     public ResponseEntity<Object> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Operation(summary = "Procura no banco o produto que representa o id passado", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
 
         Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
@@ -44,15 +61,29 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findById(id));
     }
 
+    @Operation(summary = "Cria um novo produto", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
     @PostMapping
     public ResponseEntity<Object> saveProduto(@RequestBody ProdutoModel produtoModels){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.saveProduto(produtoModels));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletaProduto(@PathVariable(value = "id") Long id){
-        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
+    @Operation(summary = "Remove o produto com o id especificado", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
+    @DeleteMapping("/{idProduto}")
+    public ResponseEntity<Object> deletaProduto(@PathVariable(value = "idProduto") Long idProduto){
+        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(idProduto);
 
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
@@ -63,10 +94,17 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body("Produto Deletado");
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProduto(@PathVariable(value = "id") Long id, @RequestBody ProdutoModel produtoModel) {
+    @Operation(summary = "Atualiza o produto que representa o id passado", method = "PUT")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
+    @PutMapping("/{idProduto}")
+    public ResponseEntity<Object> updateProduto(@PathVariable(value = "idProduto") Long idProduto, @RequestBody ProdutoModel produtoModel) {
 
-        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
+        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(idProduto);
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
         }
