@@ -8,6 +8,7 @@ import com.lojaonline.hermanos.br.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/produtos")
+@RequestMapping(value = "/api/produtos", produces = {"application/json"})
+@Tag(name = "produto")
 @AllArgsConstructor
 public class ProdutoController {
 
