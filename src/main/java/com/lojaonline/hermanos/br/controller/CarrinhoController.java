@@ -65,7 +65,28 @@ public class CarrinhoController {
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.findById(id));
     }
 
-    @Operation(summary = "Adiciona um produto no carrinho", method = "PUT")
+    @Operation(summary = "Deleta um produto do carrinho", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
+    @DeleteMapping("/deleta-produto-carrinho/{idProduto}/{idCarrinho}")
+    public ResponseEntity<Object> deleteCarrinho(@PathVariable(value = "idProduto") Long idProduto, @PathVariable(value = "idCarrinho") Long idCarrinho){
+        CarrinhoModel carrinhoModel = carrinhoService.findById(idCarrinho).get();
+
+
+        for(int contador = 0 ; contador < carrinhoModel.getProdutos().size(); contador++) {
+            if (carrinhoModel.getProdutos().get(contador).getId() == idProduto) {
+                carrinhoModel.getProdutos().remove(contador);
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.delete(carrinhoModel));
+    }
+
+    @Operation(summary = "Adiciona um produto ao carrinho", method = "PUT")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
@@ -78,7 +99,7 @@ public class CarrinhoController {
             "idProdutos": [1, 2, 3]",
         }
      */
-    @PutMapping(value = "/adicionar-produto/{idCarrinho}")
+    @PutMapping("/adicionar-produto/{idCarrinho}")
     public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "idCarrinho") Long idCarrinho, @RequestBody Map<String, Object> request) {
         List<Integer> idProdutos = (List<Integer>) request.get("idProdutos");
         List<Long> idProdutosLong = new ArrayList<>();

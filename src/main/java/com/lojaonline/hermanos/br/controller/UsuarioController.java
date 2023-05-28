@@ -67,24 +67,6 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUsuario(usuarioModel));
     }
 
-    @Operation(summary = "Deleta um usuario", method = "DELETE")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
-    @DeleteMapping("/{cpfUsuario}")
-    public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "cpfUsuario") String cpfUsuario){
-        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findByIdPrivate(cpfUsuario);
-
-        if(usuarioModelsOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não foi encontrado");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body("Produto deletado: " + usuarioService.delete(usuarioModelsOptional.get()));
-    }
-
     @Operation(summary = "Atualiza o usuario que representa o id passado", method = "PUT")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
@@ -104,7 +86,6 @@ public class UsuarioController {
         usuarioModelPut.setNome(usuarioModel.getNome());
         usuarioModelPut.setEmail(usuarioModel.getEmail());
         usuarioModelPut.setSenha(usuarioModel.getSenha());
-        usuarioModelPut.setCpf(usuarioModel.getCpf());
         usuarioModelPut.setPedidos(usuarioModel.getPedidos());
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.saveUsuario(usuarioModelPut));

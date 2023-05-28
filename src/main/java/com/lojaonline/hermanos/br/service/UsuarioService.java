@@ -53,8 +53,4 @@ public class UsuarioService {
         return new UsuarioDTO(usuario);
     }
 
-    public UsuarioDTO delete(UsuarioModel usuarioModel){
-        return new UsuarioDTO(usuarioModel);
-    }
-
 }
