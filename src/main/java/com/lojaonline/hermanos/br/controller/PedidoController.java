@@ -9,6 +9,9 @@ import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,13 @@ public class PedidoController {
 
     final ProdutoService produtoService;
 
+    @Operation(summary = "Procura todos os pedidos do banco", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
     @GetMapping
     public ResponseEntity<Object> findAll() {
         List<PedidoModel> pedidoModelList = pedidoService.findAll();
@@ -41,17 +51,31 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @Operation(summary = "Procura no banco o pedido que representa o id passado", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findById(id));
     }
 
+    @Operation(summary = "Cria um pedido e exclui os itens do carrinho do usuario especificado", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
     /* Irá receber no corpo do Json os produtos que serão feito os pedidos
         Json:
         {
             "idProdutos": [];
         } */
-    @PostMapping("/criar-pedido/{cpfUsuario}")
+    @PostMapping(value = "/criar-pedido/{cpfUsuario}")
     public ResponseEntity<Object> criarPedido(@PathVariable(value = "cpfUsuario") String cpf, @RequestBody Map<String,Object> request) {
         UsuarioModel usuario = usuarioService.findByIdPrivate(cpf).get();
         List<Integer> idProdutosInteger = (List<Integer>) request.get("idProdutos");
@@ -82,6 +106,14 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.criarPedido(usuario, produtos));
     }
 
+
+    @Operation(summary = "Deleta um pedido", method = "DELETE")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
+            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePedido(@PathVariable(value = "id") Long id) {
 

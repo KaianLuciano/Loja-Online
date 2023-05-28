@@ -65,7 +65,7 @@ public class CarrinhoController {
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.findById(id));
     }
 
-    @Operation(summary = "Adiciona um produto no carrinho", method = "GET")
+    @Operation(summary = "Adiciona um produto no carrinho", method = "PUT")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
             @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
