@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lojaonline
+    username: postgres
+    password: BlackOut1206@
+
+  sql:
+    init:
+      mode: always
