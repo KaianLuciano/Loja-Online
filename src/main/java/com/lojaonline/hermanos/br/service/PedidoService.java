@@ -38,8 +38,6 @@ public class PedidoService {
 
     public Optional<PedidoModel> findById(Long id) { return pedidoRepository.findById(id); }
 
-    /* Ao criar o pedido ele transfere a lista de produtos do carrinho para o pedido,
-        e logo em seguida ele limpa os pedidos do carrinho. */
     @Transactional
     public PedidoModel criarPedido(UsuarioModel usuario, List<ProdutoModel> produtos) {
         PedidoModel pedido = new PedidoModel();

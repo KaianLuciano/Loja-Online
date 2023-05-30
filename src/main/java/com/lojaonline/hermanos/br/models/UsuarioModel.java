@@ -1,6 +1,8 @@
 package com.lojaonline.hermanos.br.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,8 +29,10 @@ public class UsuarioModel {
     private String senha;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Hidden
     private List<PedidoModel> pedidos;
 
     @OneToOne
+    @Hidden
     private CarrinhoModel carrinhoModel;
 }

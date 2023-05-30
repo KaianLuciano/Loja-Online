@@ -12,13 +12,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProdutoDTO {
+public class ProdutoDTO implements Serializable {
 
     @JsonIgnore
     private Long id;

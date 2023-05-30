@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsuarioDTO {
+public class UsuarioDTO implements Serializable {
 
     private String nome;
     private String email;
