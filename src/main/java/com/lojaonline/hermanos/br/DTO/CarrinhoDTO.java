@@ -21,7 +21,6 @@ public class CarrinhoDTO implements Serializable {
 
     private Long id;
     private List<ProdutoModel> produtos;
-    private UsuarioModel usuario;
 
     public CarrinhoDTO(CarrinhoModel entity) {
         BeanUtils.copyProperties(entity, this);

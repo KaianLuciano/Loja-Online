@@ -19,4 +19,5 @@ public class LojaOnlineApplication {
 	}
 
 	// http://localhost:8080/swagger-ui/index.html#/
+	// https://loja-online-production.up.railway.app/swagger-ui/index.html#/
 }

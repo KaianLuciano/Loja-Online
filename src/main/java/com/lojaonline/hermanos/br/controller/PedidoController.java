@@ -84,19 +84,16 @@ public class PedidoController {
         UsuarioModel usuario = usuarioService.findByIdPrivate(cpf).get();
         List<Integer> idProdutosInteger = (List<Integer>) request.get("idProdutos");
 
-        //Valida se os idProdutos possui algum valor atrelado ou é null
         List<Long> idProdutosLong = new ArrayList<>();
         for(Integer idProdutosAuxiliar : idProdutosInteger) {
             idProdutosLong.add(idProdutosAuxiliar != null ? idProdutosAuxiliar.longValue() : null );
         }
 
-        //Verifica se o produto existe no banco, logo em seguida adiciona eles a lista de produtos caso exista
         List<ProdutoModel> produtos = new ArrayList<>();
         for(Long idProdutosAuxiliar : idProdutosLong) {
             produtos.add(produtoService.findById(idProdutosAuxiliar).orElseThrow(() -> {throw new ProdutoNaoEncontradoException(idProdutosAuxiliar);}));
         }
 
-        //Verifica se o usuário possui estes produtos no carrinho
         for(int contador = 0; contador < produtos.size(); contador++){
             if (pedidoUtils.verificarProdutoComID(usuario.getCarrinhoModel().getProdutos(), produtos.get(contador).getId()) == false) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto com o nome "
