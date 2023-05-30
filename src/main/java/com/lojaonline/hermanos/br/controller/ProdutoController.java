@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/produtos", produces = {"application/json"})
-@Tag(name = "produto")
+@Tag(name = "produtos")
 @AllArgsConstructor
 public class ProdutoController {
 

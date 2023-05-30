@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/usuarios", produces = {"application/json"})
-@Tag(name = "usuário")
+@Tag(name = "usuarios")
 @AllArgsConstructor
 public class UsuarioController {
 
