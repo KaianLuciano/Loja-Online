@@ -9,6 +9,7 @@ import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,13 @@ public class CarrinhoService {
        return carrinhoRepository.findById(id);
     }
 
+    @Transactional
     public CarrinhoModel saveCarrinho (CarrinhoModel carrinhoModel) {
         System.out.println("Aqui");
         return carrinhoRepository.save(carrinhoModel);
     }
 
+    @Transactional
     public CarrinhoModel delete(CarrinhoModel carrinhoModel){
         carrinhoRepository.delete(carrinhoModel);
         return carrinhoModel;

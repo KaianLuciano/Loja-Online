@@ -60,6 +60,7 @@ public class PedidoService {
         return pedido;
     }
 
+    @Transactional
     public PedidoModel delete(Optional<PedidoModel> pedidoModel) {
         pedidoRepository.delete(pedidoModel.get());
         return pedidoModel.get();

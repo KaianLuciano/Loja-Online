@@ -34,10 +34,12 @@ public class ProdutoService {
         return produtoModel;
     }
 
+    @Transactional
     public void delete(ProdutoModel produtoModel){
         produtoRepository.delete(produtoModel);
     }
 
+    @Transactional
     public PedidoModel associarProdutoAoPedido(List<ProdutoModel> produtos, PedidoModel pedido) {
         pedido.setProdutos(produtos);
         pedidoRepository.save(pedido);

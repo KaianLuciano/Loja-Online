@@ -9,6 +9,7 @@ import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import com.lojaonline.hermanos.br.service.CarrinhoService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,7 @@ public class UsuarioService {
         return usuario;
     }
 
+    @Transactional
     public UsuarioDTO saveUsuario(UsuarioModel usuario) {
         usuarioRepository.save(usuario);
 
