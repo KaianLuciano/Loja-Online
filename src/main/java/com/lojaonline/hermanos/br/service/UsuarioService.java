@@ -46,11 +46,13 @@ public class UsuarioService {
     public UsuarioDTO saveUsuario(UsuarioModel usuario) {
         usuarioRepository.save(usuario);
 
-        CarrinhoModel carrinhoModel = new CarrinhoModel();
-        carrinhoModel.setUsuario(usuario);
-        carrinhoService.saveCarrinho(carrinhoModel);
-        usuario.setCarrinhoModel(carrinhoModel);
-        usuarioRepository.save(usuario);
+        if(usuario.getCarrinhoModel() == null){
+            CarrinhoModel carrinhoModel = new CarrinhoModel();
+            carrinhoModel.setUsuario(usuario);
+            carrinhoService.saveCarrinho(carrinhoModel);
+            usuario.setCarrinhoModel(carrinhoModel);
+            usuarioRepository.save(usuario);
+        }
 
         return new UsuarioDTO(usuario);
     }
