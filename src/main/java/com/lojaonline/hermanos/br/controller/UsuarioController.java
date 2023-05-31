@@ -86,7 +86,6 @@ public class UsuarioController {
         usuarioModelPut.setNome(usuarioModel.getNome());
         usuarioModelPut.setEmail(usuarioModel.getEmail());
         usuarioModelPut.setSenha(usuarioModel.getSenha());
-        usuarioModelPut.setPedidos(usuarioModel.getPedidos());
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.saveUsuario(usuarioModelPut));
     }
