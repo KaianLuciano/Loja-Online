@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:3000", "https://loja-online-production.up.railway.app")
+                        .allowedOrigins("http://localhost:3000", "https://loja-online-production.up.railway.app", "https://loja-online-production.up.railway.app/swagger-ui/index.html#/")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*");
             }
