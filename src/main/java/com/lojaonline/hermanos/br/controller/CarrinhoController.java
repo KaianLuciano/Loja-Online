@@ -65,7 +65,7 @@ public class CarrinhoController {
             }
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.delete(carrinhoModel));
+        return ResponseEntity.status(HttpStatus.OK).body("Produtos Deletado");
     }
 
     @Operation(summary = "Adiciona um produto ao carrinho")

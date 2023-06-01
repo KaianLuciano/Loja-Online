@@ -31,10 +31,4 @@ public class CarrinhoService {
         return carrinhoRepository.save(carrinhoModel);
     }
 
-    @Transactional
-    public CarrinhoModel delete(CarrinhoModel carrinhoModel){
-        carrinhoRepository.delete(carrinhoModel);
-        return carrinhoModel;
-    }
-
 }
