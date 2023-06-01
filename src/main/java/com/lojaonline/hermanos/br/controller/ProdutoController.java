@@ -32,25 +32,13 @@ public class ProdutoController {
 
     final PedidoService pedidoService;
 
-    @Operation(summary = "Procura todos o produtos existentes no banco", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Procura todos o produtos existentes no banco")
     @GetMapping
     public ResponseEntity<Object> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findAll());
     }
 
-    @Operation(summary = "Procura no banco o produto que representa o id passado", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Procura no banco o produto que representa o id passado")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
 
@@ -63,26 +51,14 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findById(id));
     }
 
-    @Operation(summary = "Cria um novo produto", method = "POST")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Cria um novo produto")
     @PostMapping
     public ResponseEntity<Object> saveProduto(@RequestBody ProdutoModel produtoModels){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.saveProduto(produtoModels));
     }
 
-    @Operation(summary = "Remove o produto com o id especificado", method = "DELETE")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Remove o produto com o id especificado")
     @DeleteMapping("/{idProduto}")
     public ResponseEntity<Object> deletaProduto(@PathVariable(value = "idProduto") Long idProduto){
         Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(idProduto);
@@ -96,13 +72,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body("Produto Deletado");
     }
 
-    @Operation(summary = "Atualiza o produto que representa o id passado", method = "PUT")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Atualiza o produto que representa o id passado")
     @PutMapping("/{idProduto}")
     public ResponseEntity<Object> updateProduto(@PathVariable(value = "idProduto") Long idProduto, @RequestBody ProdutoModel produtoModel) {
 

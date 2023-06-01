@@ -2,13 +2,7 @@ package com.lojaonline.hermanos.br.service;
 
 import com.lojaonline.hermanos.br.DTO.CarrinhoDTO;
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
-import com.lojaonline.hermanos.br.models.UsuarioModel;
 import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
-import com.lojaonline.hermanos.br.repository.PedidoRepository;
-import com.lojaonline.hermanos.br.repository.ProdutoRepository;
-import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

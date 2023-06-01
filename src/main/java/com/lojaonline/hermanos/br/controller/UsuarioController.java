@@ -25,25 +25,13 @@ public class UsuarioController {
     final UsuarioService usuarioService;
     final ProdutoService produtoService;
 
-    @Operation(summary = "Procura todos os usuario do banco", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Procura todos os usuario do banco")
     @GetMapping
     public ResponseEntity<Object> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findAll());
     }
 
-    @Operation(summary = "Procura no banco o usuario que representa o id passado", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Procura no banco o usuario que representa o id passado")
     @GetMapping(value = "/{cpfUsuario}")
     public ResponseEntity<Object> findById(@PathVariable(value = "cpfUsuario") String cpfUsuario) {
         Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findByIdPrivate(cpfUsuario);
@@ -55,25 +43,13 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.findById(cpfUsuario));
     }
 
-    @Operation(summary = "Cria um novo usuario", method = "POST")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Cria um novo usuario")
     @PostMapping
     public ResponseEntity<Object> saveUsuario(@RequestBody UsuarioModel usuarioModel) {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUsuario(usuarioModel));
     }
 
-    @Operation(summary = "Atualiza o usuario que representa o id passado", method = "PUT")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Atualiza o usuario que representa o id passado")
     @PutMapping("/{cpfUsuario}")
     public ResponseEntity<Object> updateUsuario(@PathVariable(value = "cpfUsuario") String cpfUsuario, @RequestBody UsuarioModel usuarioModel) {
 

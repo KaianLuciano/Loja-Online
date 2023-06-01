@@ -1,9 +1,7 @@
 package com.lojaonline.hermanos.br.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.ProdutoModel;
-import com.lojaonline.hermanos.br.models.UsuarioModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

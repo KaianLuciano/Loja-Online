@@ -1,20 +1,15 @@
 package com.lojaonline.hermanos.br.service;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
-import com.lojaonline.hermanos.br.DTO.CarrinhoDTO;
 import com.lojaonline.hermanos.br.DTO.UsuarioDTO;
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
-import com.lojaonline.hermanos.br.service.CarrinhoService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -34,25 +34,13 @@ public class CarrinhoController {
     final UsuarioService usuarioService;
 
 
-    @Operation(summary = "Buscar todas os carrinhos presentes no banco", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Buscar todas os carrinhos presentes no banco")
     @GetMapping
     public ResponseEntity<Object> findAll(){
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.findAll());
     }
 
-    @Operation(summary = "Buscar todas o carrinho que representa o id passado no banco", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Buscar todas o carrinho que representa o id passado no banco")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
 
@@ -65,13 +53,7 @@ public class CarrinhoController {
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.findById(id));
     }
 
-    @Operation(summary = "Deleta um produto do carrinho", method = "DELETE")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Deleta um produto do carrinho")
     @DeleteMapping("/deleta-produto-carrinho/{idProduto}/{idCarrinho}")
     public ResponseEntity<Object> deleteCarrinho(@PathVariable(value = "idProduto") Long idProduto, @PathVariable(value = "idCarrinho") Long idCarrinho){
         CarrinhoModel carrinhoModel = carrinhoService.findById(idCarrinho).get();
@@ -86,13 +68,7 @@ public class CarrinhoController {
         return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.delete(carrinhoModel));
     }
 
-    @Operation(summary = "Adiciona um produto ao carrinho", method = "PUT")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Adiciona um produto ao carrinho")
     /*
         Corpo que será recebido no Json
         {

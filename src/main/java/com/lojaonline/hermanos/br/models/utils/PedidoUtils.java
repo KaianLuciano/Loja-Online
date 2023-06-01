@@ -1,10 +1,8 @@
 package com.lojaonline.hermanos.br.models.utils;
 
 import com.lojaonline.hermanos.br.models.ProdutoModel;
-import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

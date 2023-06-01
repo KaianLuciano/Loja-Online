@@ -37,13 +37,7 @@ public class PedidoController {
 
     final ProdutoService produtoService;
 
-    @Operation(summary = "Procura todos os pedidos do banco", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Procura todos os pedidos do banco")
     @GetMapping
     public ResponseEntity<Object> findAll() {
         List<PedidoModel> pedidoModelList = pedidoService.findAll();
@@ -53,25 +47,13 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findAll());
     }
 
-    @Operation(summary = "Procura no banco o pedido que representa o id passado", method = "GET")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Procura no banco o pedido que representa o id passado")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findById(id));
     }
 
-    @Operation(summary = "Cria um pedido e exclui os itens do carrinho do usuario especificado", method = "POST")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Cria um pedido e exclui os itens do carrinho do usuario especificado")
     /* Irá receber no corpo do Json os produtos que serão feito os pedidos
         Json:
         {
@@ -106,13 +88,7 @@ public class PedidoController {
     }
 
 
-    @Operation(summary = "Deleta um pedido", method = "DELETE")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
-            @ApiResponse(responseCode = "422", description = "Dados de requisição inválida"),
-            @ApiResponse(responseCode = "400", description = "Parametros inválidados"),
-            @ApiResponse(responseCode = "500", description = "Erro ao realizar busca dos dados"),
-    })
+    @Operation(summary = "Deleta um pedido")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deletePedido(@PathVariable(value = "id") Long id) {
 

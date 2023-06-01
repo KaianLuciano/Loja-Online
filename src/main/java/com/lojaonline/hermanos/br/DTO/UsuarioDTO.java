@@ -1,6 +1,5 @@
 package com.lojaonline.hermanos.br.DTO;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojaonline.hermanos.br.models.CarrinhoModel;
 import com.lojaonline.hermanos.br.models.PedidoModel;
 import com.lojaonline.hermanos.br.models.UsuarioModel;
