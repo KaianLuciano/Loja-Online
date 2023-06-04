@@ -65,6 +65,8 @@ public class CarrinhoController {
             }
         }
 
+        carrinhoService.saveCarrinho(carrinhoModel);
+
         return ResponseEntity.status(HttpStatus.OK).body("Produtos Deletado");
     }
 
