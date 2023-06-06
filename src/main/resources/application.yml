@@ -4,6 +4,10 @@ spring:
     username: postgres
     password: BlackOut1206@
 
+
   sql:
     init:
       mode: always
+  jpa:
+    hibernate:
+      ddl-auto: create
