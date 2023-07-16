@@ -85,7 +85,7 @@ public class CarrinhoController {
         List<Produto> produtos = new ArrayList<>();
 
         for(Long idProdutosAuxiliar : idProdutosLong) {
-            produtos.add(produtoService.findById(idProdutosAuxiliar).get());
+            produtos.add(new Produto(produtoService.findById(idProdutosAuxiliar)));
         }
 
         Carrinho carrinho = carrinhoService.findById(idCarrinho).get();

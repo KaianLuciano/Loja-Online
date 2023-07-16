@@ -1,7 +1,6 @@
 package com.lojaonline.hermanos.br.controller;
 
 
-import com.lojaonline.hermanos.br.controller.exceptions.ProdutoNaoEncontradoException;
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.Usuario;
@@ -69,7 +68,7 @@ public class PedidoController {
 
         List<Produto> produtos = new ArrayList<>();
         for(Long idProdutosAuxiliar : idProdutosLong) {
-            produtos.add(produtoService.findById(idProdutosAuxiliar).orElseThrow(() -> {throw new ProdutoNaoEncontradoException(idProdutosAuxiliar);}));
+            produtos.add(new Produto(produtoService.findById(idProdutosAuxiliar)));
         }
 
         for(int contador = 0; contador < produtos.size(); contador++){

@@ -3,6 +3,7 @@ package com.lojaonline.hermanos.br.service;
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosListagemProduto;
+import com.lojaonline.hermanos.br.models.dto.usuario.DadosListagemUsuario;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
@@ -25,8 +26,8 @@ public class ProdutoService {
         return produtos.stream().map(produto -> (new DadosListagemProduto(produto))).toList();
     }
 
-    public Optional<Produto> findById(Long id){
-        return produtoRepository.findById(id);
+    public DadosListagemProduto findById(Long id){
+        return new DadosListagemProduto(produtoRepository.findById(id).get());
     }
 
 

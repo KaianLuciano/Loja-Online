@@ -34,13 +34,6 @@ public class ProdutoController {
     @Operation(summary = "Procura no banco o produto que representa o id passado")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
-
-        Optional<Produto> produtoModelsOptional = produtoService.findById(id);
-
-        if(!produtoModelsOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
-        }
-
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.findById(id));
     }
 
@@ -54,34 +47,16 @@ public class ProdutoController {
     @Operation(summary = "Remove o produto com o id especificado")
     @DeleteMapping("/{idProduto}")
     public ResponseEntity<Object> deletaProduto(@PathVariable(value = "idProduto") Long idProduto){
-        Optional<Produto> produtoModelsOptional = produtoService.findById(idProduto);
-
-        if(!produtoModelsOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
-        }
-
-        produtoService.delete(produtoModelsOptional.get());
-
+        Produto produtoEncontrado = new Produto(produtoService.findById(idProduto));
+        produtoService.delete(produtoEncontrado);
         return ResponseEntity.status(HttpStatus.OK).body("Produto Deletado");
     }
 
     @Operation(summary = "Atualiza o produto que representa o id passado")
     @PutMapping("/{idProduto}")
     public ResponseEntity<Object> updateProduto(@PathVariable(value = "idProduto") Long idProduto, @RequestBody Produto produto) {
-
-        Optional<Produto> produtoModelsOptional = produtoService.findById(idProduto);
-        if(!produtoModelsOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
-        }
-
-        var produtoModelPut = produtoModelsOptional.get();
-        produtoModelPut.setNome(produto.getNome());
-        produtoModelPut.setDescricao(produto.getDescricao());
-        produtoModelPut.setPreco(produto.getPreco());
-        produtoModelPut.setQtdDisponivel(produto.getQtdDisponivel());
-        produtoModelPut.setCategoria(produtoModelPut.getCategoria());
-
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.saveProduto(produtoModelPut));
+        Produto produtoEncontrado = new Produto(produtoService.findById(idProduto));
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.saveProduto(produtoEncontrado));
     }
 
 }
