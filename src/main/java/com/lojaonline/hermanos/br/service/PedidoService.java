@@ -36,7 +36,7 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido criarPedido(Usuario usuario, List<Produto> produtos) {
+    public DadosListagemPedido criarPedido(Usuario usuario, List<Produto> produtos) {
         Pedido pedido = new Pedido();
         pedido.setProdutos(produtos);
         pedido.setUsuario(usuario);
@@ -54,7 +54,7 @@ public class PedidoService {
 
         carrinhoRepository.save(carrinho);
 
-        return pedido;
+        return new DadosListagemPedido(pedido);
     }
 
     @Transactional
