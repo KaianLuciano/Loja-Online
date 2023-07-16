@@ -38,31 +38,14 @@ public class CarrinhoController {
 
     @Operation(summary = "Buscar todas o carrinho que representa o id passado no banco")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
-
-        Optional<Carrinho> carrinhoModelOptional = carrinhoService.findById(id);
-
-        if(!carrinhoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrinho não encontrado");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.findById(id));
+    public ResponseEntity<Object> findById(@PathVariable(value = "id") Long idCarrinho) {
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.findById(idCarrinho));
     }
 
     @Operation(summary = "Deleta um produto do carrinho")
     @DeleteMapping("/deleta-produto-carrinho/{idProduto}/{idCarrinho}")
     public ResponseEntity<Object> deleteCarrinho(@PathVariable(value = "idProduto") Long idProduto, @PathVariable(value = "idCarrinho") Long idCarrinho){
-        Carrinho carrinho = carrinhoService.findById(idCarrinho).get();
-
-
-        for(int contador = 0; contador < carrinho.getProdutos().size(); contador++) {
-            if (carrinho.getProdutos().get(contador).getId() == idProduto) {
-                carrinho.getProdutos().remove(contador);
-            }
-        }
-
-        carrinhoService.saveCarrinho(carrinho);
-
+        //refatorar método
         return ResponseEntity.status(HttpStatus.OK).body("Produtos Deletado");
     }
 
@@ -75,7 +58,7 @@ public class CarrinhoController {
      */
     @PutMapping("/adicionar-produto/{idCarrinho}")
     public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "idCarrinho") Long idCarrinho, @RequestBody Map<String, Object> request) {
-        List<Integer> idProdutos = (List<Integer>) request.get("idProdutos");
+        /*List<Integer> idProdutos = (List<Integer>) request.get("idProdutos");
         List<Long> idProdutosLong = new ArrayList<>();
 
         for(Integer idProdutoAuxiliar : idProdutos) {
@@ -88,11 +71,11 @@ public class CarrinhoController {
             produtos.add(new Produto(produtoService.findById(idProdutosAuxiliar)));
         }
 
-        Carrinho carrinho = carrinhoService.findById(idCarrinho).get();
+        Carrinho carrinho = carrinhoService.findById(idCarrinho);
 
         carrinho.setProdutos(produtos);
-        System.out.println("Aqui");
-        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.saveCarrinho(carrinho));
+        System.out.println("Aqui");*/
+        return ResponseEntity.status(HttpStatus.OK).body("carrinhoService.saveCarrinho(carrinho)");
     }
 
 }

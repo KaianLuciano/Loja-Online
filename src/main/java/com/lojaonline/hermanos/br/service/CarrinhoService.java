@@ -1,7 +1,7 @@
 package com.lojaonline.hermanos.br.service;
 
-import com.lojaonline.hermanos.br.models.dto.carrinho.CarrinhoDTO;
 import com.lojaonline.hermanos.br.models.Carrinho;
+import com.lojaonline.hermanos.br.models.dto.carrinho.DadosListagemCarrinho;
 import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -16,19 +16,19 @@ public class CarrinhoService {
 
     final CarrinhoRepository carrinhoRepository;
 
-    public List<CarrinhoDTO> findAll(){
-        List<Carrinho> carrinho = carrinhoRepository.findAll();
-        return carrinho.stream().map(x -> new CarrinhoDTO(x)).toList();
+    public List<DadosListagemCarrinho> findAll(){
+        List<Carrinho> carrinhos = carrinhoRepository.findAll();
+        return carrinhos.stream().map(carrinho -> new DadosListagemCarrinho(carrinho)).toList();
     }
 
-    public Optional<Carrinho> findById(Long id){
-       return carrinhoRepository.findById(id);
+    public DadosListagemCarrinho findById(Long id){
+       return new DadosListagemCarrinho(carrinhoRepository.findById(id).get());
     }
 
     @Transactional
-    public Carrinho saveCarrinho (Carrinho carrinho) {
+    public DadosListagemCarrinho saveCarrinho (Carrinho carrinho) {
         System.out.println("Aqui");
-        return carrinhoRepository.save(carrinho);
+        return new DadosListagemCarrinho(carrinhoRepository.save(carrinho));
     }
 
 }
