@@ -2,6 +2,7 @@ package com.lojaonline.hermanos.br.service;
 
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
+import com.lojaonline.hermanos.br.models.dto.produto.DadosListagemProduto;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
@@ -19,8 +20,9 @@ public class ProdutoService {
 
     final PedidoRepository pedidoRepository;
 
-    public List<Produto> findAll(){
-        return produtoRepository.findAll();
+    public List<DadosListagemProduto> findAll(){
+        List<Produto> produtos = produtoRepository.findAll();
+        return produtos.stream().map(produto -> (new DadosListagemProduto(produto))).toList();
     }
 
     public Optional<Produto> findById(Long id){
