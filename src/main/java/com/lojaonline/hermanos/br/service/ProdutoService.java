@@ -1,7 +1,7 @@
 package com.lojaonline.hermanos.br.service;
 
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
+import com.lojaonline.hermanos.br.models.Pedido;
+import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
@@ -19,32 +19,32 @@ public class ProdutoService {
 
     final PedidoRepository pedidoRepository;
 
-    public List<ProdutoModel> findAll(){
+    public List<Produto> findAll(){
         return produtoRepository.findAll();
     }
 
-    public Optional<ProdutoModel> findById(Long id){
+    public Optional<Produto> findById(Long id){
         return produtoRepository.findById(id);
     }
 
 
     @Transactional
-    public ProdutoModel saveProduto(ProdutoModel produtoModel){
-        produtoRepository.save(produtoModel);
-        return produtoModel;
+    public Produto saveProduto(Produto produto){
+        produtoRepository.save(produto);
+        return produto;
     }
 
     @Transactional
-    public void delete(ProdutoModel produtoModel){
-        produtoRepository.delete(produtoModel);
+    public void delete(Produto produto){
+        produtoRepository.delete(produto);
     }
 
     @Transactional
-    public PedidoModel associarProdutoAoPedido(List<ProdutoModel> produtos, PedidoModel pedido) {
+    public Pedido associarProdutoAoPedido(List<Produto> produtos, Pedido pedido) {
         pedido.setProdutos(produtos);
         pedidoRepository.save(pedido);
 
-        for(ProdutoModel produto : produtos) {
+        for(Produto produto : produtos) {
             produto.getPedido().add(pedido);
             produtoRepository.save(produto);
         }

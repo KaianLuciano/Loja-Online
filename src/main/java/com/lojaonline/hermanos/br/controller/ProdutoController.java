@@ -1,23 +1,16 @@
 package com.lojaonline.hermanos.br.controller;
 
 import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
+import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -42,7 +35,7 @@ public class ProdutoController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
 
-        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(id);
+        Optional<Produto> produtoModelsOptional = produtoService.findById(id);
 
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
@@ -53,7 +46,7 @@ public class ProdutoController {
 
     @Operation(summary = "Cria um novo produto")
     @PostMapping
-    public ResponseEntity<Object> saveProduto(@RequestBody ProdutoModel produtoModels){
+    public ResponseEntity<Object> saveProduto(@RequestBody Produto produtoModels){
 
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.saveProduto(produtoModels));
     }
@@ -61,7 +54,7 @@ public class ProdutoController {
     @Operation(summary = "Remove o produto com o id especificado")
     @DeleteMapping("/{idProduto}")
     public ResponseEntity<Object> deletaProduto(@PathVariable(value = "idProduto") Long idProduto){
-        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(idProduto);
+        Optional<Produto> produtoModelsOptional = produtoService.findById(idProduto);
 
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
@@ -74,18 +67,18 @@ public class ProdutoController {
 
     @Operation(summary = "Atualiza o produto que representa o id passado")
     @PutMapping("/{idProduto}")
-    public ResponseEntity<Object> updateProduto(@PathVariable(value = "idProduto") Long idProduto, @RequestBody ProdutoModel produtoModel) {
+    public ResponseEntity<Object> updateProduto(@PathVariable(value = "idProduto") Long idProduto, @RequestBody Produto produto) {
 
-        Optional<ProdutoModel> produtoModelsOptional = produtoService.findById(idProduto);
+        Optional<Produto> produtoModelsOptional = produtoService.findById(idProduto);
         if(!produtoModelsOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto não foi encontrado");
         }
 
         var produtoModelPut = produtoModelsOptional.get();
-        produtoModelPut.setNome(produtoModel.getNome());
-        produtoModelPut.setDescricao(produtoModel.getDescricao());
-        produtoModelPut.setPreco(produtoModel.getPreco());
-        produtoModelPut.setQtdDisponivel(produtoModel.getQtdDisponivel());
+        produtoModelPut.setNome(produto.getNome());
+        produtoModelPut.setDescricao(produto.getDescricao());
+        produtoModelPut.setPreco(produto.getPreco());
+        produtoModelPut.setQtdDisponivel(produto.getQtdDisponivel());
         produtoModelPut.setCategoria(produtoModelPut.getCategoria());
 
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.saveProduto(produtoModelPut));

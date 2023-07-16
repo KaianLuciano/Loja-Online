@@ -1,7 +1,7 @@
-package com.lojaonline.hermanos.br.DTO;
+package com.lojaonline.hermanos.br.models.dto.carrinho;
 
-import com.lojaonline.hermanos.br.models.CarrinhoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
+import com.lojaonline.hermanos.br.models.Carrinho;
+import com.lojaonline.hermanos.br.models.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +18,9 @@ import java.util.List;
 public class CarrinhoDTO implements Serializable {
 
     private Long id;
-    private List<ProdutoModel> produtos;
+    private List<Produto> produtos;
 
-    public CarrinhoDTO(CarrinhoModel entity) {
+    public CarrinhoDTO(Carrinho entity) {
         BeanUtils.copyProperties(entity, this);
     }
 }

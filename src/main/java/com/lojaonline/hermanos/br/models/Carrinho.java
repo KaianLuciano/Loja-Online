@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_carrinhos")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class CarrinhoModel implements Serializable {
+public class Carrinho implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,9 @@ public class CarrinhoModel implements Serializable {
     @JoinTable(name="carrinho_tem_produtos", joinColumns=
     {@JoinColumn(name="carrinho_id")}, inverseJoinColumns=
     {@JoinColumn(name="produto_id")})
-    private List<ProdutoModel> produtos;
+    private List<Produto> produtos;
 
     @OneToOne
     @JsonIgnore
-    private UsuarioModel usuario;
+    private Usuario usuario;
 }

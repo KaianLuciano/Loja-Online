@@ -1,13 +1,11 @@
 package com.lojaonline.hermanos.br.controller;
 
 
-import com.lojaonline.hermanos.br.models.UsuarioModel;
+import com.lojaonline.hermanos.br.models.Usuario;
 
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +32,7 @@ public class UsuarioController {
     @Operation(summary = "Procura no banco o usuario que representa o id passado")
     @GetMapping(value = "/{cpfUsuario}")
     public ResponseEntity<Object> findById(@PathVariable(value = "cpfUsuario") String cpfUsuario) {
-        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findByIdPrivate(cpfUsuario);
+        Optional<Usuario> usuarioModelsOptional = usuarioService.findByIdPrivate(cpfUsuario);
 
         if(usuarioModelsOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não encontrado");
@@ -45,23 +43,23 @@ public class UsuarioController {
 
     @Operation(summary = "Cria um novo usuario")
     @PostMapping
-    public ResponseEntity<Object> saveUsuario(@RequestBody UsuarioModel usuarioModel) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUsuario(usuarioModel));
+    public ResponseEntity<Object> saveUsuario(@RequestBody Usuario usuario) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUsuario(usuario));
     }
 
     @Operation(summary = "Atualiza o usuario que representa o id passado")
     @PutMapping("/{cpfUsuario}")
-    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "cpfUsuario") String cpfUsuario, @RequestBody UsuarioModel usuarioModel) {
+    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "cpfUsuario") String cpfUsuario, @RequestBody Usuario usuario) {
 
-        Optional<UsuarioModel> usuarioModelsOptional = usuarioService.findByIdPrivate(cpfUsuario);
+        Optional<Usuario> usuarioModelsOptional = usuarioService.findByIdPrivate(cpfUsuario);
         if(usuarioModelsOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não foi encontrado");
         }
 
         var usuarioModelPut = usuarioModelsOptional.get();
-        usuarioModelPut.setNome(usuarioModel.getNome());
-        usuarioModelPut.setEmail(usuarioModel.getEmail());
-        usuarioModelPut.setSenha(usuarioModel.getSenha());
+        usuarioModelPut.setNome(usuario.getNome());
+        usuarioModelPut.setEmail(usuario.getEmail());
+        usuarioModelPut.setSenha(usuario.getSenha());
 
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.saveUsuario(usuarioModelPut));
     }

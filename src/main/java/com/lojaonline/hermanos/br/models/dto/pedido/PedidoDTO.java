@@ -1,9 +1,9 @@
-package com.lojaonline.hermanos.br.DTO;
+package com.lojaonline.hermanos.br.models.dto.pedido;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
-import com.lojaonline.hermanos.br.models.UsuarioModel;
+import com.lojaonline.hermanos.br.models.Pedido;
+import com.lojaonline.hermanos.br.models.Produto;
+import com.lojaonline.hermanos.br.models.Usuario;
 import com.lojaonline.hermanos.br.models.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,11 +22,11 @@ public class PedidoDTO implements Serializable {
 
     @JsonIgnore
     private Long id;
-    private List<ProdutoModel> produtos;
-    private UsuarioModel usuario;
+    private List<Produto> produtos;
+    private Usuario usuario;
     private Status statusPedido;
 
-    public PedidoDTO(PedidoModel entity) {
+    public PedidoDTO(Pedido entity) {
         BeanUtils.copyProperties(entity, this);
     }
 }

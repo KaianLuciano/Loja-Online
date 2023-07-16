@@ -1,9 +1,9 @@
-package com.lojaonline.hermanos.br.DTO;
+package com.lojaonline.hermanos.br.models.dto.produto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lojaonline.hermanos.br.models.CarrinhoModel;
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
+import com.lojaonline.hermanos.br.models.Carrinho;
+import com.lojaonline.hermanos.br.models.Pedido;
+import com.lojaonline.hermanos.br.models.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,11 +27,11 @@ public class ProdutoDTO implements Serializable {
     private Integer qtdDisponivel;
     private String categoria;
     @JsonIgnore
-    List<CarrinhoModel> carrinhos;
+    List<Carrinho> carrinhos;
     @JsonIgnore
-    private List<PedidoModel> pedido;
+    private List<Pedido> pedido;
 
-    public ProdutoDTO(ProdutoModel entity) {
+    public ProdutoDTO(Produto entity) {
         BeanUtils.copyProperties(entity, this);
     }
 

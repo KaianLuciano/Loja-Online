@@ -1,13 +1,13 @@
 package com.lojaonline.hermanos.br.controller.util;
 
-import com.lojaonline.hermanos.br.models.PedidoModel;
-import com.lojaonline.hermanos.br.models.UsuarioModel;
+import com.lojaonline.hermanos.br.models.Pedido;
+import com.lojaonline.hermanos.br.models.Usuario;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ControllerUtils {
 
-    public boolean isProdutoEmpty(UsuarioModel usuario) {
+    public boolean isProdutoEmpty(Usuario usuario) {
         if (usuario.getPedidos() == null) {
             return true;
         } else {
@@ -15,7 +15,7 @@ public class ControllerUtils {
         }
     }
 
-    public boolean isProdutoEmpty(PedidoModel pedido) {
+    public boolean isProdutoEmpty(Pedido pedido) {
         if (pedido.getUsuario() == null) {
             return true;
         } else {

@@ -1,8 +1,8 @@
 package com.lojaonline.hermanos.br.service;
 
-import com.lojaonline.hermanos.br.DTO.UsuarioDTO;
-import com.lojaonline.hermanos.br.models.CarrinhoModel;
-import com.lojaonline.hermanos.br.models.UsuarioModel;
+import com.lojaonline.hermanos.br.models.dto.usuario.DadosListagemUsuario;
+import com.lojaonline.hermanos.br.models.Carrinho;
+import com.lojaonline.hermanos.br.models.Usuario;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
@@ -23,33 +23,33 @@ public class UsuarioService {
     final CarrinhoService carrinhoService;
 
 
-    public List<UsuarioDTO> findAll(){
-        List<UsuarioModel> usuarioModel = usuarioRepository.findAll();
-        return usuarioModel.stream().map(x -> new UsuarioDTO(x)).toList();
+    public List<DadosListagemUsuario> findAll(){
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return usuarios.stream().map(usuario -> new DadosListagemUsuario(usuario)).toList();
     }
 
-    public UsuarioDTO findById(String cpf){
-        return new UsuarioDTO(usuarioRepository.findById(cpf).get());
+    public Usuario findById(String cpf){
+        return usuarioRepository.findById(cpf).get();
     }
 
-    public Optional<UsuarioModel> findByIdPrivate(String cpf){
-        Optional<UsuarioModel> usuario = usuarioRepository.findById(cpf);
+    public Optional<Usuario> findByIdPrivate(String cpf){
+        Optional<Usuario> usuario = usuarioRepository.findById(cpf);
         return usuario;
     }
 
     @Transactional
-    public UsuarioDTO saveUsuario(UsuarioModel usuario) {
+    public Usuario saveUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
 
-        if(usuario.getCarrinhoModel() == null){
-            CarrinhoModel carrinhoModel = new CarrinhoModel();
-            carrinhoModel.setUsuario(usuario);
-            carrinhoService.saveCarrinho(carrinhoModel);
-            usuario.setCarrinhoModel(carrinhoModel);
+        if(usuario.getCarrinho() == null){
+            Carrinho carrinho = new Carrinho();
+            carrinho.setUsuario(usuario);
+            carrinhoService.saveCarrinho(carrinho);
+            usuario.setCarrinho(carrinho);
             usuarioRepository.save(usuario);
         }
 
-        return new UsuarioDTO(usuario);
+        return usuario;
     }
 
 }

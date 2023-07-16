@@ -1,15 +1,11 @@
 package com.lojaonline.hermanos.br.controller;
 
-import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
-import com.lojaonline.hermanos.br.models.CarrinhoModel;
-import com.lojaonline.hermanos.br.models.ProdutoModel;
-import com.lojaonline.hermanos.br.models.UsuarioModel;
+import com.lojaonline.hermanos.br.models.Carrinho;
+import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.service.CarrinhoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,7 +40,7 @@ public class CarrinhoController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
 
-        Optional<CarrinhoModel> carrinhoModelOptional = carrinhoService.findById(id);
+        Optional<Carrinho> carrinhoModelOptional = carrinhoService.findById(id);
 
         if(!carrinhoModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carrinho não encontrado");
@@ -56,16 +52,16 @@ public class CarrinhoController {
     @Operation(summary = "Deleta um produto do carrinho")
     @DeleteMapping("/deleta-produto-carrinho/{idProduto}/{idCarrinho}")
     public ResponseEntity<Object> deleteCarrinho(@PathVariable(value = "idProduto") Long idProduto, @PathVariable(value = "idCarrinho") Long idCarrinho){
-        CarrinhoModel carrinhoModel = carrinhoService.findById(idCarrinho).get();
+        Carrinho carrinho = carrinhoService.findById(idCarrinho).get();
 
 
-        for(int contador = 0 ; contador < carrinhoModel.getProdutos().size(); contador++) {
-            if (carrinhoModel.getProdutos().get(contador).getId() == idProduto) {
-                carrinhoModel.getProdutos().remove(contador);
+        for(int contador = 0; contador < carrinho.getProdutos().size(); contador++) {
+            if (carrinho.getProdutos().get(contador).getId() == idProduto) {
+                carrinho.getProdutos().remove(contador);
             }
         }
 
-        carrinhoService.saveCarrinho(carrinhoModel);
+        carrinhoService.saveCarrinho(carrinho);
 
         return ResponseEntity.status(HttpStatus.OK).body("Produtos Deletado");
     }
@@ -86,13 +82,13 @@ public class CarrinhoController {
                 idProdutosLong.add(idProdutoAuxiliar != null ? idProdutoAuxiliar.longValue() : null);
         }
 
-        List<ProdutoModel> produtos = new ArrayList<>();
+        List<Produto> produtos = new ArrayList<>();
 
         for(Long idProdutosAuxiliar : idProdutosLong) {
             produtos.add(produtoService.findById(idProdutosAuxiliar).get());
         }
 
-        CarrinhoModel carrinho = carrinhoService.findById(idCarrinho).get();
+        Carrinho carrinho = carrinhoService.findById(idCarrinho).get();
 
         carrinho.setProdutos(produtos);
         System.out.println("Aqui");

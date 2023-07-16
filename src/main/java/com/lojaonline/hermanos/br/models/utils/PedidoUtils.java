@@ -1,6 +1,6 @@
 package com.lojaonline.hermanos.br.models.utils;
 
-import com.lojaonline.hermanos.br.models.ProdutoModel;
+import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -13,8 +13,8 @@ public class PedidoUtils {
 
     final ProdutoRepository produtoRepository;
 
-    public boolean verificarProdutoComID(List<ProdutoModel> listaProdutos, Long idProcurado){
-        for (ProdutoModel produto : listaProdutos) {
+    public boolean verificarProdutoComID(List<Produto> listaProdutos, Long idProcurado){
+        for (Produto produto : listaProdutos) {
             if (produto.getId() == idProcurado) {
                 return true;
             }

@@ -5,31 +5,29 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "tb_usuarios")
 @Getter @Setter
-public class UsuarioModel {
+public class Usuario implements Serializable {
 
     @Id
     @Column(name = "cpf", unique = true, nullable = true, length = 11)
     private String cpf;
 
-    @Column(name = "nome")
     private String nome;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "senha")
     private String senha;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Hidden
-    private List<PedidoModel> pedidos;
+    private List<Pedido> pedidos;
 
     @OneToOne
     @Hidden
-    private CarrinhoModel carrinhoModel;
+    private Carrinho carrinho;
 }
