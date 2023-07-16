@@ -38,7 +38,7 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario saveUsuario(Usuario usuario) {
+    public DadosListagemUsuario saveUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
 
         if(usuario.getCarrinho() == null){
@@ -49,7 +49,7 @@ public class UsuarioService {
             usuarioRepository.save(usuario);
         }
 
-        return usuario;
+        return new DadosListagemUsuario(usuario);
     }
 
 }
