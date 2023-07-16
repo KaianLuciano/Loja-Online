@@ -28,8 +28,8 @@ public class UsuarioService {
         return usuarios.stream().map(usuario -> new DadosListagemUsuario(usuario)).toList();
     }
 
-    public Usuario findById(String cpf){
-        return usuarioRepository.findById(cpf).get();
+    public DadosListagemUsuario findById(String cpf){
+        return new DadosListagemUsuario(usuarioRepository.findById(cpf).get());
     }
 
     public Optional<Usuario> findByIdPrivate(String cpf){
