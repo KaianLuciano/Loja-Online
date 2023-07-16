@@ -1,6 +1,7 @@
 package com.lojaonline.hermanos.br.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lojaonline.hermanos.br.models.dto.pedido.DadosListagemPedido;
 import com.lojaonline.hermanos.br.models.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,5 +32,4 @@ public class Pedido implements Serializable {
 
     @Enumerated(EnumType.ORDINAL)
     private Status statusPedido;
-
 }

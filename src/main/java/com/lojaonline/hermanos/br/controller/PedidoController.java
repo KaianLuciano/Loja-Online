@@ -4,6 +4,7 @@ package com.lojaonline.hermanos.br.controller;
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.Usuario;
+import com.lojaonline.hermanos.br.models.dto.pedido.DadosListagemPedido;
 import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
@@ -37,10 +38,6 @@ public class PedidoController {
     @Operation(summary = "Procura todos os pedidos do banco")
     @GetMapping
     public ResponseEntity<Object> findAll() {
-        List<Pedido> pedidoList = pedidoService.findAll();
-        if(pedidoList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista de pedidos vazia!");
-        }
         return ResponseEntity.status(HttpStatus.OK).body(pedidoService.findAll());
     }
 
@@ -87,14 +84,8 @@ public class PedidoController {
 
     @Operation(summary = "Deleta um pedido")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletePedido(@PathVariable(value = "id") Long id) {
-
-        Optional<Pedido> pedidoModelOptional = pedidoService.findById(id);
-        if(!pedidoModelOptional.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body("Pedido não encontrado");
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.delete(pedidoModelOptional));
+    public ResponseEntity<Object> deletePedido(@PathVariable(value = "id") Long idPedido) {
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.delete(idPedido));
     }
 
 }

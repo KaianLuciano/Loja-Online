@@ -4,6 +4,7 @@ import com.lojaonline.hermanos.br.models.Carrinho;
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.Usuario;
+import com.lojaonline.hermanos.br.models.dto.pedido.DadosListagemPedido;
 import com.lojaonline.hermanos.br.models.enums.Status;
 import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
@@ -25,11 +26,14 @@ public class PedidoService {
     final CarrinhoRepository carrinhoRepository;
     final PedidoUtils pedidoUtils;
 
-    public List<Pedido> findAll(){
-        return pedidoRepository.findAll();
+    public List<DadosListagemPedido> findAll(){
+        List<Pedido> pedidos = pedidoRepository.findAll();
+        return pedidos.stream().map(pedido -> (new DadosListagemPedido(pedido))).toList();
     }
 
-    public Optional<Pedido> findById(Long id) { return pedidoRepository.findById(id); }
+    public DadosListagemPedido findById(Long id) {
+        return new DadosListagemPedido(pedidoRepository.findById(id).get());
+    }
 
     @Transactional
     public Pedido criarPedido(Usuario usuario, List<Produto> produtos) {
@@ -54,9 +58,9 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido delete(Optional<Pedido> pedidoModel) {
-        pedidoRepository.delete(pedidoModel.get());
-        return pedidoModel.get();
+    public DadosListagemPedido delete(Long idPedido) {
+        pedidoRepository.deleteById(idPedido);
+        return new DadosListagemPedido(pedidoRepository.findById(idPedido).get());
     }
 
 }
