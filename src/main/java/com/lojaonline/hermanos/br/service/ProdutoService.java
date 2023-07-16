@@ -32,9 +32,9 @@ public class ProdutoService {
 
 
     @Transactional
-    public Produto saveProduto(Produto produto){
+    public DadosListagemProduto saveProduto(Produto produto){
         produtoRepository.save(produto);
-        return produto;
+        return new DadosListagemProduto(produto);
     }
 
     @Transactional
