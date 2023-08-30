@@ -5,4 +5,4 @@ spring:
     password: BlackOut1206@
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update

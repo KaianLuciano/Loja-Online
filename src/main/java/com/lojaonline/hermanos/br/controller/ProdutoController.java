@@ -2,6 +2,8 @@ package com.lojaonline.hermanos.br.controller;
 
 import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
 import com.lojaonline.hermanos.br.models.Produto;
+import com.lojaonline.hermanos.br.models.dto.produto.DadosAtualizaProduto;
+import com.lojaonline.hermanos.br.models.dto.produto.DadosListagemProduto;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,12 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @RestController
-@RequestMapping(value = "/api/produtos", produces = {"application/json"})
-@Tag(name = "produtos")
+@RequestMapping("/produtos")
 @AllArgsConstructor
+@Tag(name = "Produto")
 public class ProdutoController {
 
     final ProdutoService produtoService;
@@ -39,24 +39,20 @@ public class ProdutoController {
 
     @Operation(summary = "Cria um novo produto")
     @PostMapping
-    public ResponseEntity<Object> saveProduto(@RequestBody Produto produtoModels){
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.saveProduto(produtoModels));
+    public ResponseEntity<DadosListagemProduto> saveProduto(@RequestBody Produto produto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.saveProduto(produto));
     }
 
     @Operation(summary = "Remove o produto com o id especificado")
     @DeleteMapping("/{idProduto}")
-    public ResponseEntity<Object> deletaProduto(@PathVariable(value = "idProduto") Long idProduto){
-        Produto produtoEncontrado = new Produto(produtoService.findById(idProduto));
-        produtoService.delete(produtoEncontrado);
-        return ResponseEntity.status(HttpStatus.OK).body("Produto Deletado");
+    public ResponseEntity<Produto> deletaProduto(@PathVariable(value = "idProduto") Long idProduto){
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.delete(idProduto));
     }
 
     @Operation(summary = "Atualiza o produto que representa o id passado")
     @PutMapping("/{idProduto}")
-    public ResponseEntity<Object> updateProduto(@PathVariable(value = "idProduto") Long idProduto, @RequestBody Produto produto) {
-        Produto produtoEncontrado = new Produto(produtoService.findById(idProduto));
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.saveProduto(produtoEncontrado));
+    public ResponseEntity<DadosListagemProduto> updateProduto(@PathVariable(value = "idProduto") Long idProduto, @RequestBody DadosAtualizaProduto produto) {
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.updateProduto(idProduto, produto));
     }
 
 }
