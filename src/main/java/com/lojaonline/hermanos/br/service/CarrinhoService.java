@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +26,6 @@ public class CarrinhoService {
 
     @Transactional
     public DadosListagemCarrinho saveCarrinho (Carrinho carrinho) {
-        System.out.println("Aqui");
         return new DadosListagemCarrinho(carrinhoRepository.save(carrinho));
     }
 

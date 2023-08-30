@@ -2,6 +2,7 @@ package com.lojaonline.hermanos.br.service;
 
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
+import com.lojaonline.hermanos.br.models.dto.produto.DadosAtualizaProduto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosListagemProduto;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
@@ -35,9 +36,19 @@ public class ProdutoService {
         return new DadosListagemProduto(produto);
     }
 
+    public DadosListagemProduto updateProduto(Long idProduto, DadosAtualizaProduto produto) {
+        Produto produtoEncontrado = produtoRepository.findById(idProduto).get();
+        Produto produtoAtualizado = new Produto(produtoEncontrado, produto);
+        Produto produtoSalvo = produtoRepository.save(produtoAtualizado);
+
+        return new DadosListagemProduto(produtoSalvo);
+    }
+
     @Transactional
-    public void delete(Produto produto){
-        produtoRepository.delete(produto);
+    public Produto delete(Long idProduto){
+        Produto produtoEncontrado = produtoRepository.findById(idProduto).get();
+        produtoRepository.delete(produtoEncontrado);
+        return produtoEncontrado;
     }
 
     @Transactional
