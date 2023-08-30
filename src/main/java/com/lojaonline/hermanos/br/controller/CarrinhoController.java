@@ -2,6 +2,7 @@ package com.lojaonline.hermanos.br.controller;
 
 import com.lojaonline.hermanos.br.models.Carrinho;
 import com.lojaonline.hermanos.br.models.Produto;
+import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import com.lojaonline.hermanos.br.service.CarrinhoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
@@ -28,6 +29,7 @@ public class CarrinhoController {
     final ProdutoService produtoService;
 
     final UsuarioService usuarioService;
+    final CarrinhoRepository carrinhoRepository;
 
 
     @Operation(summary = "Buscar todas os carrinhos presentes no banco")
@@ -56,26 +58,18 @@ public class CarrinhoController {
             "idProdutos": [1, 2, 3]",
         }
      */
-    @PutMapping("/adicionar-produto/{idCarrinho}")
-    public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "idCarrinho") Long idCarrinho, @RequestBody Map<String, Object> request) {
-        /*List<Integer> idProdutos = (List<Integer>) request.get("idProdutos");
-        List<Long> idProdutosLong = new ArrayList<>();
+    @PutMapping("/adicionar-produto/{idCarrinho}/{idProduto}")
+    public ResponseEntity<Object> adicionarProdutoCarrinho(@PathVariable(value = "idCarrinho") Long idCarrinho, @PathVariable(value = "idProduto") Long idProduto) {
+        Produto produto = new Produto(produtoService.findById(idProduto));
+        Carrinho carrinho = carrinhoRepository.findById(idCarrinho).get();
 
-        for(Integer idProdutoAuxiliar : idProdutos) {
-                idProdutosLong.add(idProdutoAuxiliar != null ? idProdutoAuxiliar.longValue() : null);
+        if(carrinho.getProdutos() == null) {
+            carrinho.setProdutos(List.of(produto));
+        } else {
+            carrinho.getProdutos().add(produto);
         }
 
-        List<Produto> produtos = new ArrayList<>();
-
-        for(Long idProdutosAuxiliar : idProdutosLong) {
-            produtos.add(new Produto(produtoService.findById(idProdutosAuxiliar)));
-        }
-
-        Carrinho carrinho = carrinhoService.findById(idCarrinho);
-
-        carrinho.setProdutos(produtos);
-        System.out.println("Aqui");*/
-        return ResponseEntity.status(HttpStatus.OK).body("carrinhoService.saveCarrinho(carrinho)");
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.saveCarrinho(carrinho));
     }
 
 }

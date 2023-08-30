@@ -3,6 +3,7 @@ package com.lojaonline.hermanos.br.service;
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosAtualizaProduto;
+import com.lojaonline.hermanos.br.models.dto.produto.DadosCriaProduto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosListagemProduto;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
@@ -31,7 +32,8 @@ public class ProdutoService {
 
 
     @Transactional
-    public DadosListagemProduto saveProduto(Produto produto){
+    public DadosListagemProduto saveProduto(DadosCriaProduto dadosCriaProduto){
+        Produto produto = new Produto(dadosCriaProduto);
         produtoRepository.save(produto);
         return new DadosListagemProduto(produto);
     }

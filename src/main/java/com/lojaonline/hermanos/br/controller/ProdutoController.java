@@ -3,6 +3,7 @@ package com.lojaonline.hermanos.br.controller;
 import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosAtualizaProduto;
+import com.lojaonline.hermanos.br.models.dto.produto.DadosCriaProduto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosListagemProduto;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
@@ -39,7 +40,7 @@ public class ProdutoController {
 
     @Operation(summary = "Cria um novo produto")
     @PostMapping
-    public ResponseEntity<DadosListagemProduto> saveProduto(@RequestBody Produto produto){
+    public ResponseEntity<DadosListagemProduto> saveProduto(@RequestBody DadosCriaProduto produto){
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.saveProduto(produto));
     }
 
