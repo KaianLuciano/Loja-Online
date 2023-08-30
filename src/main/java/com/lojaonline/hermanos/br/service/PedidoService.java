@@ -20,10 +20,10 @@ import java.util.List;
 @AllArgsConstructor
 public class PedidoService {
 
-    final PedidoRepository pedidoRepository;
-    final ProdutoRepository produtoRepository;
-    final CarrinhoRepository carrinhoRepository;
-    final PedidoUtils pedidoUtils;
+    private final PedidoRepository pedidoRepository;
+    private final ProdutoRepository produtoRepository;
+    private final CarrinhoRepository carrinhoRepository;
+    private final PedidoUtils pedidoUtils;
 
     public List<DadosListagemPedido> findAll(){
         List<Pedido> pedidos = pedidoRepository.findAll();

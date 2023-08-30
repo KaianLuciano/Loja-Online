@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosAtualizaProduto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosCriaProduto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosListagemProduto;
-import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;

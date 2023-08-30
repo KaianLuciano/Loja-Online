@@ -1,10 +1,8 @@
 package com.lojaonline.hermanos.br.controller;
 
 
-import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.Usuario;
-import com.lojaonline.hermanos.br.models.dto.pedido.DadosListagemPedido;
 import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
@@ -19,21 +17,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/pedidos", produces = {"application/json"})
-@Tag(name = "pedidos")
+@RequestMapping("/api/pedidos")
+@Tag(name = "Pedido")
 @AllArgsConstructor
 public class PedidoController {
 
-    final PedidoService pedidoService;
-
-    final PedidoUtils pedidoUtils;
-
-    final UsuarioService usuarioService;
-
-    final ProdutoService produtoService;
+    private final PedidoService pedidoService;
+    private final PedidoUtils pedidoUtils;
+    private final UsuarioService usuarioService;
+    private final ProdutoService produtoService;
 
     @Operation(summary = "Procura todos os pedidos do banco")
     @GetMapping
@@ -48,11 +42,6 @@ public class PedidoController {
     }
 
     @Operation(summary = "Cria um pedido e exclui os itens do carrinho do usuario especificado")
-    /* Irá receber no corpo do Json os produtos que serão feito os pedidos
-        Json:
-        {
-            "idProdutos": [];
-        } */
     @PostMapping(value = "/criar-pedido/{cpfUsuario}")
     public ResponseEntity<Object> criarPedido(@PathVariable(value = "cpfUsuario") String cpf, @RequestBody Map<String,Object> request) {
         Usuario usuario = usuarioService.findByIdPrivate(cpf).get();

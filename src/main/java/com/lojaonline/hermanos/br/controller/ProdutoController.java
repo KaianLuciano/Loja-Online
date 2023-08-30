@@ -1,6 +1,5 @@
 package com.lojaonline.hermanos.br.controller;
 
-import com.lojaonline.hermanos.br.controller.util.ControllerUtils;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosAtualizaProduto;
 import com.lojaonline.hermanos.br.models.dto.produto.DadosCriaProduto;
@@ -15,15 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/produtos")
+@RequestMapping("/api/produtos")
 @AllArgsConstructor
 @Tag(name = "Produto")
 public class ProdutoController {
 
     final ProdutoService produtoService;
-
-    final ControllerUtils controllerUtils;
-
     final PedidoService pedidoService;
 
     @Operation(summary = "Procura todos o produtos existentes no banco")

@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CarrinhoService {
 
-    final CarrinhoRepository carrinhoRepository;
+    private final CarrinhoRepository carrinhoRepository;
 
     public List<DadosListagemCarrinho> findAll(){
         List<Carrinho> carrinhos = carrinhoRepository.findAll();

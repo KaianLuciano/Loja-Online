@@ -17,9 +17,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ProdutoService {
 
-    final ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
 
-    final PedidoRepository pedidoRepository;
+    private final PedidoRepository pedidoRepository;
 
     public List<DadosListagemProduto> findAll(){
         List<Produto> produtos = produtoRepository.findAll();

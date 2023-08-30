@@ -1,10 +1,12 @@
 package com.lojaonline.hermanos.br.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lojaonline.hermanos.br.models.dto.pedido.DadosListagemPedido;
 import com.lojaonline.hermanos.br.models.enums.Status;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;

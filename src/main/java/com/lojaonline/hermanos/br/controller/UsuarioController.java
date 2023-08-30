@@ -2,8 +2,6 @@ package com.lojaonline.hermanos.br.controller;
 
 
 import com.lojaonline.hermanos.br.models.Usuario;
-
-import com.lojaonline.hermanos.br.service.ProdutoService;
 import com.lojaonline.hermanos.br.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,13 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/usuarios", produces = {"application/json"})
-@Tag(name = "usuarios")
+@RequestMapping("/api/usuarios")
+@Tag(name = "Usuario")
 @AllArgsConstructor
 public class UsuarioController {
 
-    final UsuarioService usuarioService;
-    final ProdutoService produtoService;
+    private final UsuarioService usuarioService;
 
     @Operation(summary = "Procura todos os usuario do banco")
     @GetMapping

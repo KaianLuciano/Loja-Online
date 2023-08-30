@@ -1,10 +1,8 @@
 package com.lojaonline.hermanos.br.service;
 
-import com.lojaonline.hermanos.br.models.dto.usuario.DadosListagemUsuario;
 import com.lojaonline.hermanos.br.models.Carrinho;
 import com.lojaonline.hermanos.br.models.Usuario;
-import com.lojaonline.hermanos.br.repository.PedidoRepository;
-import com.lojaonline.hermanos.br.repository.ProdutoRepository;
+import com.lojaonline.hermanos.br.models.dto.usuario.DadosListagemUsuario;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -17,10 +15,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UsuarioService {
 
-    final UsuarioRepository usuarioRepository;
-    final PedidoRepository pedidoRepository;
-    final ProdutoRepository produtoRepository;
-    final CarrinhoService carrinhoService;
+    private final UsuarioRepository usuarioRepository;
+    private final CarrinhoService carrinhoService;
 
 
     public List<DadosListagemUsuario> findAll(){
