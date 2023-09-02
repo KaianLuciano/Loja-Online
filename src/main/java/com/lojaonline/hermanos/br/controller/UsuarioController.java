@@ -2,6 +2,7 @@ package com.lojaonline.hermanos.br.controller;
 
 
 import com.lojaonline.hermanos.br.models.Usuario;
+import com.lojaonline.hermanos.br.models.dto.usuario.DadosAtualizaUsuario;
 import com.lojaonline.hermanos.br.models.dto.usuario.DadosListagemUsuario;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import com.lojaonline.hermanos.br.service.UsuarioService;
@@ -43,8 +44,8 @@ public class UsuarioController {
 
     @Operation(summary = "Atualiza o usuario que representa o id passado")
     @PutMapping("/{cpfUsuario}")
-    public ResponseEntity<DadosListagemUsuario> updateUsuario(@PathVariable(value = "cpfUsuario") String cpfUsuario, @RequestBody Usuario usuario) {
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUsuario(cpfUsuario, usuario));
+    public ResponseEntity<DadosListagemUsuario> updateUsuario(@PathVariable(value = "cpfUsuario") String cpfUsuario, @RequestBody DadosAtualizaUsuario dadosAtualizaUsuario) {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUsuario(cpfUsuario, dadosAtualizaUsuario));
     }
 
 }
