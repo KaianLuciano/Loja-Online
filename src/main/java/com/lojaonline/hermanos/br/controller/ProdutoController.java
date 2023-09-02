@@ -29,9 +29,9 @@ public class ProdutoController {
     }
 
     @Operation(summary = "Procura no banco o produto que representa o id passado")
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Object> findById(@PathVariable(value = "id") Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(produtoService.findById(id));
+    @GetMapping(value = "/{idProduto}")
+    public ResponseEntity<Object> findById(@PathVariable(value = "idProduto") Long idProduto) {
+        return ResponseEntity.status(HttpStatus.OK).body(produtoService.findById(idProduto));
     }
 
     @Operation(summary = "Cria um novo produto")
