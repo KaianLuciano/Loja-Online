@@ -6,9 +6,12 @@ import com.lojaonline.hermanos.br.models.dto.usuario.DadosListagemUsuario;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -28,11 +31,6 @@ public class UsuarioService {
         return new DadosListagemUsuario(usuarioRepository.findById(cpf).get());
     }
 
-    public Optional<Usuario> findByIdPrivate(String cpf){
-        Optional<Usuario> usuario = usuarioRepository.findById(cpf);
-        return usuario;
-    }
-
     @Transactional
     public DadosListagemUsuario saveUsuario(Usuario usuario) {
         usuarioRepository.save(usuario);
@@ -46,6 +44,18 @@ public class UsuarioService {
         }
 
         return new DadosListagemUsuario(usuario);
+    }
+
+    public DadosListagemUsuario updateUsuario(String cpfUsuario, Usuario usuario) {
+        Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(cpfUsuario);
+        if(usuarioEncontrado.isEmpty()) {
+            throw new NoSuchElementException();
+        }
+
+        Usuario usuarioAtualizado = new Usuario(usuario, usuarioEncontrado.get());
+        Usuario usuarioSalvo = usuarioRepository.save(usuarioAtualizado);
+
+        return new DadosListagemUsuario(usuarioSalvo);
     }
 
 }

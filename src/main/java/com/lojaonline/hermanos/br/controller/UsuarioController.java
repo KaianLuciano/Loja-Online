@@ -2,6 +2,7 @@ package com.lojaonline.hermanos.br.controller;
 
 
 import com.lojaonline.hermanos.br.models.Usuario;
+import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import com.lojaonline.hermanos.br.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,18 +48,7 @@ public class UsuarioController {
     @Operation(summary = "Atualiza o usuario que representa o id passado")
     @PutMapping("/{cpfUsuario}")
     public ResponseEntity<Object> updateUsuario(@PathVariable(value = "cpfUsuario") String cpfUsuario, @RequestBody Usuario usuario) {
-
-        Optional<Usuario> usuarioModelsOptional = usuarioService.findByIdPrivate(cpfUsuario);
-        if(usuarioModelsOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario não foi encontrado");
-        }
-
-        var usuarioModelPut = usuarioModelsOptional.get();
-        usuarioModelPut.setNome(usuario.getNome());
-        usuarioModelPut.setEmail(usuario.getEmail());
-        usuarioModelPut.setSenha(usuario.getSenha());
-
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.saveUsuario(usuarioModelPut));
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUsuario(cpfUsuario, usuario));
     }
 
 }
