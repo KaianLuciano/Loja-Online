@@ -2,6 +2,7 @@ package com.lojaonline.hermanos.br.service;
 
 import com.lojaonline.hermanos.br.models.Carrinho;
 import com.lojaonline.hermanos.br.models.Usuario;
+import com.lojaonline.hermanos.br.models.dto.usuario.DadosAtualizaUsuario;
 import com.lojaonline.hermanos.br.models.dto.usuario.DadosListagemUsuario;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
@@ -46,13 +47,13 @@ public class UsuarioService {
         return new DadosListagemUsuario(usuario);
     }
 
-    public DadosListagemUsuario updateUsuario(String cpfUsuario, Usuario usuario) {
+    public DadosListagemUsuario updateUsuario(String cpfUsuario, DadosAtualizaUsuario usuarioAtualizar) {
         Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(cpfUsuario);
         if(usuarioEncontrado.isEmpty()) {
             throw new NoSuchElementException();
         }
 
-        Usuario usuarioAtualizado = new Usuario(usuario, usuarioEncontrado.get());
+        Usuario usuarioAtualizado = new Usuario(usuarioAtualizar, usuarioEncontrado.get());
         Usuario usuarioSalvo = usuarioRepository.save(usuarioAtualizado);
 
         return new DadosListagemUsuario(usuarioSalvo);

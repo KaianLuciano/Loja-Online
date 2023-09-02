@@ -1,8 +1,11 @@
 package com.lojaonline.hermanos.br.models;
 
+import com.lojaonline.hermanos.br.models.dto.usuario.DadosAtualizaUsuario;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -10,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tb_usuarios")
-@Getter @Setter
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor
 public class Usuario implements Serializable {
 
     @Id
@@ -28,11 +31,11 @@ public class Usuario implements Serializable {
     @Hidden
     private Carrinho carrinho;
 
-    public Usuario(Usuario usuarioAtualizar, Usuario usuarioOriginal) {
-        this.cpf = usuarioOriginal.getCpf() == null ? usuarioOriginal.getCpf() : usuarioAtualizar.getCpf();
-        this.nome = usuarioOriginal.getNome() == null ? usuarioOriginal.getNome() : usuarioAtualizar.getNome();
-        this.email = usuarioOriginal.getEmail() == null ? usuarioOriginal.getEmail() : usuarioAtualizar.getEmail();
-        this.senha = usuarioOriginal.getSenha() == null ? usuarioOriginal.getSenha() : usuarioAtualizar.getSenha();
+    public Usuario(DadosAtualizaUsuario usuarioAtualizar, Usuario usuarioOriginal) {
+        this.cpf = usuarioOriginal.getCpf();
+        this.nome = usuarioOriginal.getNome() == null ? usuarioOriginal.getNome() : usuarioAtualizar.nome();
+        this.email = usuarioOriginal.getEmail() == null ? usuarioOriginal.getEmail() : usuarioAtualizar.email();
+        this.senha = usuarioOriginal.getSenha() == null ? usuarioOriginal.getSenha() : usuarioAtualizar.senha();
         this.pedidos = usuarioOriginal.getPedidos();
         this.carrinho = usuarioOriginal.getCarrinho();
     }
