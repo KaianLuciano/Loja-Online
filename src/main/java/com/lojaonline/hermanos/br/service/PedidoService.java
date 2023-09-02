@@ -1,5 +1,6 @@
 package com.lojaonline.hermanos.br.service;
 
+import com.lojaonline.hermanos.br.exception.ProdutoNaoPresenteNoCarrinho;
 import com.lojaonline.hermanos.br.models.Carrinho;
 import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
@@ -40,17 +41,16 @@ public class PedidoService {
         List<Produto> produtosEncontrados = idProdutos.stream().map(idProduto -> produtoRepository.findById(idProduto).get()).toList();
         Usuario usuarioEncontrado = usuarioRepository.findById(cpfUsuario).get();
 
-        /*
-        Irá ser estourar uma exceção personalizada
+
         for(int contador = 0; contador < produtosEncontrados.size(); contador++){
-            if (pedidoUtils.verificarProdutoComID(usuario.getCarrinho().getProdutos(), produtosEncontrados.get(contador).getId()) == false) {
-                return ("Produto com o nome "
+            if (pedidoUtils.verificarProdutoComID(usuarioEncontrado.getCarrinho().getProdutos(), produtosEncontrados.get(contador).getId()) == false) {
+                throw new ProdutoNaoPresenteNoCarrinho("Produto com o nome "
                         + produtosEncontrados.get(contador).getNome()
                         + " e número de indentificação "
                         + produtosEncontrados.get(contador).getId()
                         + " não está presente no carrinho, logo não é possivel concluir o pedido");
             }
-        }*/
+        }
 
         Pedido pedido = new Pedido(produtosEncontrados, usuarioEncontrado);
         pedidoRepository.save(pedido);
