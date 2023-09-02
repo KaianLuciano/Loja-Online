@@ -1,10 +1,7 @@
 package com.lojaonline.hermanos.br.controller;
 
 
-import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.service.PedidoService;
-import com.lojaonline.hermanos.br.service.ProdutoService;
-import com.lojaonline.hermanos.br.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -16,14 +13,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pedidos")
-@Tag(name = "Pedido")
 @AllArgsConstructor
+@Tag(name = "Pedido")
 public class PedidoController {
 
     private final PedidoService pedidoService;
-    private final PedidoUtils pedidoUtils;
-    private final UsuarioService usuarioService;
-    private final ProdutoService produtoService;
 
     @Operation(summary = "Procura todos os pedidos do banco")
     @GetMapping
