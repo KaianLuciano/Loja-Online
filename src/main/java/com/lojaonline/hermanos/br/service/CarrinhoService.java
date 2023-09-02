@@ -29,4 +29,12 @@ public class CarrinhoService {
         return new DadosListagemCarrinho(carrinhoRepository.save(carrinho));
     }
 
+    public DadosListagemCarrinho deleteProdutoCarrinho(Long idCarrinho, Long idProduto) {
+        Carrinho carrinhoCliente = carrinhoRepository.findById(idCarrinho).get();
+        carrinhoCliente.getProdutos().removeIf(produtos -> produtos.getId() == idProduto);
+        Carrinho carrinhoSalvo = carrinhoRepository.save(carrinhoCliente);
+
+        return new DadosListagemCarrinho(carrinhoSalvo);
+    }
+
 }

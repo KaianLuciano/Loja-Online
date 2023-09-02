@@ -1,8 +1,6 @@
 package com.lojaonline.hermanos.br.controller;
 
 
-import com.lojaonline.hermanos.br.models.Produto;
-import com.lojaonline.hermanos.br.models.Usuario;
 import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.service.PedidoService;
 import com.lojaonline.hermanos.br.service.ProdutoService;
@@ -14,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/pedidos")

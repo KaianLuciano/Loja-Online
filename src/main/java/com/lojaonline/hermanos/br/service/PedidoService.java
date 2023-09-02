@@ -5,7 +5,6 @@ import com.lojaonline.hermanos.br.models.Pedido;
 import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.Usuario;
 import com.lojaonline.hermanos.br.models.dto.pedido.DadosListagemPedido;
-import com.lojaonline.hermanos.br.models.enums.Status;
 import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;

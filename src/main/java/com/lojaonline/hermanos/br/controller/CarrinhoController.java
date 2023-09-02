@@ -40,9 +40,8 @@ public class CarrinhoController {
 
     @Operation(summary = "Deleta um produto do carrinho")
     @DeleteMapping("/deleta-produto-carrinho/{idProduto}/{idCarrinho}")
-    public ResponseEntity<Object> deleteCarrinho(@PathVariable(value = "idProduto") Long idProduto, @PathVariable(value = "idCarrinho") Long idCarrinho){
-        //refatorar método
-        return ResponseEntity.status(HttpStatus.OK).body("Produtos Deletado");
+    public ResponseEntity<DadosListagemCarrinho> deleteCarrinho(@PathVariable(value = "idProduto") Long idProduto, @PathVariable(value = "idCarrinho") Long idCarrinho){
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.deleteProdutoCarrinho(idCarrinho, idProduto));
     }
 
     @Operation(summary = "Adiciona um produto ao carrinho")
