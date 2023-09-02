@@ -1,11 +1,7 @@
 package com.lojaonline.hermanos.br.controller;
 
-import com.lojaonline.hermanos.br.models.Carrinho;
-import com.lojaonline.hermanos.br.models.Produto;
 import com.lojaonline.hermanos.br.models.dto.carrinho.DadosListagemCarrinho;
-import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import com.lojaonline.hermanos.br.service.CarrinhoService;
-import com.lojaonline.hermanos.br.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -22,9 +18,6 @@ import java.util.List;
 public class CarrinhoController {
 
     private final CarrinhoService carrinhoService;
-    private final ProdutoService produtoService;
-    private final CarrinhoRepository carrinhoRepository;
-
 
     @Operation(summary = "Buscar todas os carrinhos presentes no banco")
     @GetMapping
@@ -47,16 +40,7 @@ public class CarrinhoController {
     @Operation(summary = "Adiciona um produto ao carrinho")
     @PutMapping("/adicionar-produto/{idCarrinho}/{idProduto}")
     public ResponseEntity<DadosListagemCarrinho> adicionarProdutoCarrinho(@PathVariable(value = "idCarrinho") Long idCarrinho, @PathVariable(value = "idProduto") Long idProduto) {
-        Produto produto = new Produto(produtoService.findById(idProduto));
-        Carrinho carrinho = carrinhoRepository.findById(idCarrinho).get();
-
-        if(carrinho.getProdutos() == null) {
-            carrinho.setProdutos(List.of(produto));
-        } else {
-            carrinho.getProdutos().add(produto);
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.saveCarrinho(carrinho));
+        return ResponseEntity.status(HttpStatus.OK).body(carrinhoService.addProdutoNoCarrinho(idCarrinho, idProduto));
     }
 
 }
