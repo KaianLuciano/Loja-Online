@@ -10,6 +10,7 @@ import com.lojaonline.hermanos.br.models.utils.PedidoUtils;
 import com.lojaonline.hermanos.br.repository.CarrinhoRepository;
 import com.lojaonline.hermanos.br.repository.PedidoRepository;
 import com.lojaonline.hermanos.br.repository.ProdutoRepository;
+import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class PedidoService {
     private final PedidoRepository pedidoRepository;
     private final ProdutoRepository produtoRepository;
     private final CarrinhoRepository carrinhoRepository;
+    private final UsuarioRepository usuarioRepository;
     private final PedidoUtils pedidoUtils;
 
     public List<DadosListagemPedido> findAll(){
@@ -35,24 +37,34 @@ public class PedidoService {
     }
 
     @Transactional
-    public DadosListagemPedido criarPedido(Usuario usuario, List<Produto> produtos) {
-        Pedido pedido = new Pedido();
-        pedido.setProdutos(produtos);
-        pedido.setUsuario(usuario);
-        pedido.setStatusPedido(Status.PENDENTE);
+    public DadosListagemPedido criarPedido(String cpfUsuario, List<Long> idProdutos) {
+        List<Produto> produtosEncontrados = idProdutos.stream().map(idProduto -> produtoRepository.findById(idProduto).get()).toList();
+        Usuario usuarioEncontrado = usuarioRepository.findById(cpfUsuario).get();
 
+        /*
+        Irá ser estourar uma exceção personalizada
+        for(int contador = 0; contador < produtosEncontrados.size(); contador++){
+            if (pedidoUtils.verificarProdutoComID(usuario.getCarrinho().getProdutos(), produtosEncontrados.get(contador).getId()) == false) {
+                return ("Produto com o nome "
+                        + produtosEncontrados.get(contador).getNome()
+                        + " e número de indentificação "
+                        + produtosEncontrados.get(contador).getId()
+                        + " não está presente no carrinho, logo não é possivel concluir o pedido");
+            }
+        }*/
+
+        Pedido pedido = new Pedido(produtosEncontrados, usuarioEncontrado);
         pedidoRepository.save(pedido);
 
-        Carrinho carrinho = usuario.getCarrinho();
-
-        for(int contador = 0 ; contador < produtos.size(); contador++) {
-            if(pedidoUtils.verificarProdutoComID(carrinho.getProdutos(), produtos.get(contador).getId())){
-                carrinho.getProdutos().remove(produtos.get(contador));
+        Carrinho carrinho = usuarioEncontrado.getCarrinho();
+        for(int contador = 0 ; contador < produtosEncontrados.size(); contador++) {
+            if(pedidoUtils.verificarProdutoComID(carrinho.getProdutos(), produtosEncontrados.get(contador).getId())){
+                carrinho.getProdutos().remove(produtosEncontrados.get(contador));
             }
         }
 
-        carrinhoRepository.save(carrinho);
 
+        carrinhoRepository.save(carrinho);
         return new DadosListagemPedido(pedido);
     }
 

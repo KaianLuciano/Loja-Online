@@ -34,4 +34,10 @@ public class Pedido implements Serializable {
 
     @Enumerated(EnumType.ORDINAL)
     private Status statusPedido;
+
+    public Pedido(List<Produto> produtosEncontrados, Usuario usuarioEncontrado) {
+        this.usuario = usuarioEncontrado;
+        this.produtos = produtosEncontrados;
+        this.statusPedido = Status.PENDENTE;
+    }
 }

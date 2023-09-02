@@ -43,31 +43,8 @@ public class PedidoController {
 
     @Operation(summary = "Cria um pedido e exclui os itens do carrinho do usuario especificado")
     @PostMapping(value = "/criar-pedido/{cpfUsuario}")
-    public ResponseEntity<Object> criarPedido(@PathVariable(value = "cpfUsuario") String cpf, @RequestBody Map<String,Object> request) {
-        Usuario usuario = usuarioService.findByIdPrivate(cpf).get();
-        List<Integer> idProdutosInteger = (List<Integer>) request.get("idProdutos");
-
-        List<Long> idProdutosLong = new ArrayList<>();
-        for(Integer idProdutosAuxiliar : idProdutosInteger) {
-            idProdutosLong.add(idProdutosAuxiliar != null ? idProdutosAuxiliar.longValue() : null );
-        }
-
-        List<Produto> produtos = new ArrayList<>();
-        for(Long idProdutosAuxiliar : idProdutosLong) {
-            produtos.add(new Produto(produtoService.findById(idProdutosAuxiliar)));
-        }
-
-        for(int contador = 0; contador < produtos.size(); contador++){
-            if (pedidoUtils.verificarProdutoComID(usuario.getCarrinho().getProdutos(), produtos.get(contador).getId()) == false) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Produto com o nome "
-                        + produtos.get(contador).getNome()
-                        + " e número de indentificação "
-                        + produtos.get(contador).getId()
-                        + " não está presente no carrinho, logo não é possivel concluir o pedido");
-            }
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.criarPedido(usuario, produtos));
+    public ResponseEntity<Object> criarPedido(@PathVariable(value = "cpfUsuario") String cpfUsuario, @RequestBody List<Long> idProdutos) {
+        return ResponseEntity.status(HttpStatus.OK).body(pedidoService.criarPedido(cpfUsuario, idProdutos));
     }
 
 
