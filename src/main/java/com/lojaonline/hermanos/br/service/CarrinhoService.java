@@ -46,11 +46,15 @@ public class CarrinhoService {
 
         if(carrinho.getProdutos() == null) {
             carrinho.setProdutos(List.of(produto));
+            Double valorTotal = calcularValorTotal(carrinho.getProdutos());
+            carrinho.setValorTotal(valorTotal);
             Carrinho carrinhoSalvo = carrinhoRepository.save(carrinho);
             return new DadosListagemCarrinho(carrinhoSalvo);
         }
 
         Carrinho carrinhoAtualizado =  verificaSeProdutoTemNoCarrinho(carrinho, produto);
+        Double valorTotal = calcularValorTotal(carrinho.getProdutos());
+        carrinho.setValorTotal(valorTotal);
         Carrinho carrinhoSalvo = carrinhoRepository.save(carrinhoAtualizado);
         return new DadosListagemCarrinho(carrinhoSalvo);
     }
@@ -64,6 +68,16 @@ public class CarrinhoService {
         }
         carrinho.getProdutos().add(produto);
         return carrinho;
+    }
+
+    public double calcularValorTotal(List<Produto> produtos) {
+        double valorTotal = 0.0;
+
+        for (Produto produto : produtos) {
+            valorTotal += produto.getPreco() * produto.getQuatidadeCarrinho();
+        }
+
+        return valorTotal;
     }
 
 

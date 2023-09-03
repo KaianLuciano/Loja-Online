@@ -18,6 +18,7 @@ public class Carrinho implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Double valorTotal;
 
     @ManyToMany
     @JoinTable(name="carrinho_tem_produtos", joinColumns=
