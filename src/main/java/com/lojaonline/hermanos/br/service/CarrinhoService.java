@@ -46,11 +46,25 @@ public class CarrinhoService {
 
         if(carrinho.getProdutos() == null) {
             carrinho.setProdutos(List.of(produto));
-        } else {
-            carrinho.getProdutos().add(produto);
+            Carrinho carrinhoSalvo = carrinhoRepository.save(carrinho);
+            return new DadosListagemCarrinho(carrinhoSalvo);
         }
 
-        return new DadosListagemCarrinho(carrinho);
+        Carrinho carrinhoAtualizado =  verificaSeProdutoTemNoCarrinho(carrinho, produto);
+        Carrinho carrinhoSalvo = carrinhoRepository.save(carrinhoAtualizado);
+        return new DadosListagemCarrinho(carrinhoSalvo);
     }
+
+    private Carrinho verificaSeProdutoTemNoCarrinho(Carrinho carrinho, Produto produto) {
+        for(int contador = 0 ; contador < carrinho.getProdutos().size() ; contador++) {
+            if (carrinho.getProdutos().get(contador).getId().equals(produto.getId())) {
+                carrinho.getProdutos().get(contador).setQuatidadeCarrinho(carrinho.getProdutos().get(contador).getQuatidadeCarrinho() + 1);
+                return carrinho;
+            }
+        }
+        carrinho.getProdutos().add(produto);
+        return carrinho;
+    }
+
 
 }

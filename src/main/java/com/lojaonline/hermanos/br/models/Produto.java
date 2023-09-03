@@ -21,15 +21,11 @@ public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
-
     private String descricao;
-
     private Double preco;
-
     private Integer qtdDisponivel;
-
+    private int quatidadeCarrinho;
     private String categoria;
 
     @ManyToMany(mappedBy = "produtos", cascade = CascadeType.ALL)
