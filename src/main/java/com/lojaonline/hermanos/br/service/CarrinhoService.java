@@ -45,9 +45,12 @@ public class CarrinhoService {
         Carrinho carrinho = carrinhoRepository.findById(idCarrinho).get();
 
         if(carrinho.getProdutos() == null) {
+            produto.setQuatidadeCarrinho(1);
             carrinho.setProdutos(List.of(produto));
+
             Double valorTotal = calcularValorTotal(carrinho.getProdutos());
             carrinho.setValorTotal(valorTotal);
+
             Carrinho carrinhoSalvo = carrinhoRepository.save(carrinho);
             return new DadosListagemCarrinho(carrinhoSalvo);
         }
