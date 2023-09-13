@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,13 +19,13 @@ public class Carrinho implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Double valorTotal;
+    private Double valorTotal = 0.0;
 
     @ManyToMany
     @JoinTable(name="carrinho_tem_produtos", joinColumns=
     {@JoinColumn(name="carrinho_id")}, inverseJoinColumns=
     {@JoinColumn(name="produto_id")})
-    private List<Produto> produtos;
+    private List<Produto> produtos = new ArrayList<>();
 
     @OneToOne
     @JsonIgnore
