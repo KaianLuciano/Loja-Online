@@ -80,11 +80,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-client</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>biz.cgta</groupId>
-            <artifactId>autowire_2.11</artifactId>
-            <version>0.2.9</version>
-        </dependency>
 
     </dependencies>
 

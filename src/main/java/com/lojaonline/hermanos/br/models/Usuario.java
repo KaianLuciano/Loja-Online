@@ -45,6 +45,12 @@ public class Usuario implements UserDetails {
         this.carrinho = usuarioOriginal.getCarrinho();
     }
 
+    public Usuario(String login, String encryptedPassword, UserRoles role) {
+        this.email = login;
+        this.senha = encryptedPassword;
+        this.role = role;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == UserRoles.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
