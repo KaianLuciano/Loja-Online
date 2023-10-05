@@ -1,4 +1,4 @@
-package com.lojaonline.hermanos.br.controller;
+package com.lojaonline.hermanos.br.security.controller;
 
 import com.lojaonline.hermanos.br.models.Usuario;
 import com.lojaonline.hermanos.br.models.dto.security.AuthenticationDTO;

@@ -1,4 +1,4 @@
-package com.lojaonline.hermanos.br.config;
+package com.lojaonline.hermanos.br.security.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

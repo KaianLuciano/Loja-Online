@@ -1,4 +1,4 @@
-package com.lojaonline.hermanos.br.service;
+package com.lojaonline.hermanos.br.security.service;
 
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
 import lombok.AllArgsConstructor;
