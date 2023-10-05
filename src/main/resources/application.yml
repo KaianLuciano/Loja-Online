@@ -7,3 +7,7 @@ spring:
     hibernate:
       ddl-auto: update
 
+api:
+  security:
+    secret:${JWT_SECRET:my-secret-key}
+
