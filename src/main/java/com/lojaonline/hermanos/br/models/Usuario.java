@@ -29,11 +29,9 @@ public class Usuario implements UserDetails {
     private UserRoles role;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Hidden
     private List<Pedido> pedidos;
 
     @OneToOne
-    @Hidden
     private Carrinho carrinho;
 
     public Usuario(DadosAtualizaUsuario usuarioAtualizar, Usuario usuarioOriginal) {
