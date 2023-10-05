@@ -2,8 +2,10 @@ package com.lojaonline.hermanos.br.security.controller;
 
 import com.lojaonline.hermanos.br.models.Usuario;
 import com.lojaonline.hermanos.br.models.dto.security.AuthenticationDTO;
+import com.lojaonline.hermanos.br.models.dto.security.LoginResponseDTO;
 import com.lojaonline.hermanos.br.models.dto.security.RegisterDTO;
 import com.lojaonline.hermanos.br.repository.UsuarioRepository;
+import com.lojaonline.hermanos.br.security.service.TokenService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +24,16 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
     private final UsuarioRepository usuarioRepository;
+    private final TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
         var usernamepassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = authenticationManager.authenticate(usernamepassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generatedToken((Usuario) auth);
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
