@@ -28,7 +28,8 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> {
                     authorize.requestMatchers(HttpMethod.POST, "/auth/login").hasRole("ADMIN");
                     authorize.requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN");
-                    authorize.requestMatchers(HttpMethod.POST, "/api/usuarios").hasRole("ADMIN")
+                    authorize.requestMatchers(HttpMethod.POST, "/api/usuarios").hasRole("ADMIN");
+                    authorize.requestMatchers(HttpMethod.GET, "/api/produtos").hasRole("ADMIN")
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
