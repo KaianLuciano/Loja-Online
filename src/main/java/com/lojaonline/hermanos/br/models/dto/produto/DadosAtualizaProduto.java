@@ -2,7 +2,7 @@ package com.lojaonline.hermanos.br.models.dto.produto;
 
 import com.lojaonline.hermanos.br.models.Produto;
 
-public record DadosAtualizaProduto(String nome, String descricao, Double preco, Integer qtdDisponivel, String categoria) {
+public record DadosAtualizaProduto(String nome, String descricao, Double preco, Integer qtdDisponivel, String categoria, String urlImagem) {
 
     public DadosAtualizaProduto(Produto produto) {
         this(
@@ -10,7 +10,8 @@ public record DadosAtualizaProduto(String nome, String descricao, Double preco, 
                 produto.getDescricao(),
                 produto.getPreco(),
                 produto.getQtdDisponivel(),
-                produto.getCategoria()
+                produto.getCategoria(),
+                produto.getUrlImagem()
         );
     }
 }

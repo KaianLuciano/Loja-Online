@@ -25,6 +25,7 @@ public class Produto implements Serializable {
     private String descricao;
     private Double preco;
     private Integer qtdDisponivel;
+    private String urlImagem;
     private int quatidadeCarrinho;
     private String categoria;
 
@@ -52,6 +53,7 @@ public class Produto implements Serializable {
         this.preco = produto.preco() != null ? produto.preco() : produtoEncontrado.getPreco();
         this.qtdDisponivel = produto.qtdDisponivel() != null ? produto.qtdDisponivel() : produtoEncontrado.getQtdDisponivel();
         this.categoria = produto.categoria() != null ? produto.categoria() : produtoEncontrado.getCategoria();
+        this.urlImagem = produto.urlImagem();
         this.carrinhos = produtoEncontrado.getCarrinhos();
         this.pedido = produtoEncontrado.getPedido();
     }
@@ -62,5 +64,6 @@ public class Produto implements Serializable {
         this.preco = dadosCriaProduto.preco();
         this.qtdDisponivel = dadosCriaProduto.qtdDisponivel();
         this.categoria = dadosCriaProduto.categoria();
+        this.urlImagem = dadosCriaProduto.urlImagem();
     }
 }

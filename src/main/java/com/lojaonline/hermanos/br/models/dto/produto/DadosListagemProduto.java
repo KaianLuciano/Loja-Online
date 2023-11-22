@@ -2,7 +2,7 @@ package com.lojaonline.hermanos.br.models.dto.produto;
 
 import com.lojaonline.hermanos.br.models.Produto;
 
-public record DadosListagemProduto(Long id, String nome, String descricao, Double preco, Integer qtdDisponivel, String categoria) {
+public record DadosListagemProduto(Long id, String nome, String descricao, Double preco, Integer qtdDisponivel, String categoria, String urlImagem) {
     public DadosListagemProduto(Produto produto) {
         this(
                 produto.getId(),
@@ -10,7 +10,8 @@ public record DadosListagemProduto(Long id, String nome, String descricao, Doubl
                 produto.getDescricao(),
                 produto.getPreco(),
                 produto.getQtdDisponivel(),
-                produto.getCategoria()
+                produto.getCategoria(),
+                produto.getUrlImagem()
         );
     }
 }

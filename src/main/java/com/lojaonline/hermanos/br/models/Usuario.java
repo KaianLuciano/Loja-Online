@@ -2,15 +2,11 @@ package com.lojaonline.hermanos.br.models;
 
 import com.lojaonline.hermanos.br.models.dto.usuario.DadosAtualizaUsuario;
 import com.lojaonline.hermanos.br.models.enums.UserRoles;
-import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_usuarios")
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class Usuario implements UserDetails {
+public class Usuario {
 
     @Id
     @Column(name = "cpf", unique = true, nullable = true, length = 11)
@@ -49,39 +45,4 @@ public class Usuario implements UserDetails {
         this.role = role;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRoles.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
-    }
-
-    @Override
-    public String getPassword() {
-        return senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
